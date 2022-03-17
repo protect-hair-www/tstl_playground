@@ -1,5 +1,5 @@
 {
-  "name": "TSTL Playground",
+  "name": "tstl_playground",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
