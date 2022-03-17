@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-17 15:19:12
- * @LastEditTime: 2022-03-17 19:09:36
+ * @LastEditTime: 2022-03-17 21:54:49
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\views\rbtree.vue
+ * @FilePath: /tstl_playground/src/views/RBTree.vue
 -->
 <template>
   <div class="red-black-tree">
@@ -39,34 +39,38 @@ import { randomNum } from '../helper';
 let chart: any = ref(null)
 let tr: _RBTree<number, string> = ref<any>(null)
 
-const onEnter = (e) => {
-  const k = Number(e.target.value)
+const onEnter = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const k = Number(target.value)
   const n = tr.insert_unique(k, k.toString());
   console.log(n);
   chart.updateChart(tr);
 }
 
-const onDelete = (e) => {
-  const v = Number(e.target.value)
+const onDelete = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = Number(target.value)
   tr.erase(v);
   chart.updateChart(tr);
 }
 
-const onRotateLeft = (e) => {
-  const v = Number(e.target.value)
+const onRotateLeft = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = Number(target.value)
   const n = tr.find(v).getNode();
   tr.leftRotate(n);
   chart.updateChart(tr);
 }
 
-const onRotateRight = (e) => {
-  const v = Number(e.target.value)
+const onRotateRight = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = Number(target.value)
   const n = tr.find(v).getNode();
   tr.rightRotate(n);
   chart.updateChart(tr);
 }
 
-const getRanddomTestData = (num) => {
+const getRanddomTestData = (num: number) => {
   let c = num;
   const test = new Set();
   while (c >= 0) {

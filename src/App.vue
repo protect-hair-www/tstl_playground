@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-17 18:45:38
+ * @LastEditTime: 2022-03-17 21:30:21
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\App.vue
+ * @FilePath: /tstl_playground/src/App.vue
 -->
 <template>
 	<el-config-provider :locale="locale">
@@ -32,15 +32,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { i18n } from "./i18n";
-import { version, buildTime } from "../build/info.json"
-
-console.log(`%c Release Build Info 
-%cVersion			v${version}
-BuildTime		${buildTime}`
-, "background:#000;color:#FFF;font-weight:bold;"
-, "background:#FFF;color:#000;"
-)
-
 let locale = computed(() => (i18n.global.messages as any)![i18n.global.locale]);
 </script>
 

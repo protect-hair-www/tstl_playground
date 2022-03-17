@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from "path"
-import { changePackageVersion } from "./build/plugins"
+import { changePackageVersion } from "./scripts/plugins"
 import { readdirSync } from 'fs';
 
 /**

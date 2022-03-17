@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-17 18:42:37
+ * @LastEditTime: 2022-03-17 21:33:41
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Vector.vue
+ * @FilePath: /tstl_playground/src/views/Vector.vue
 -->
 <template>
   <div class="Vector-test">
@@ -81,7 +81,6 @@ const testObject = () => {
     // let ins: Person<string> = new Person<string>(name)
     vec.push_back(name)
   })
-  console.log(vec)
 
   const front = vec.front()
   // vec.resize()
@@ -113,6 +112,7 @@ const testPrimitive = () => {
   vec.push_back('4')
   vec.push_back('5')
   console.log(vec)
+
 
   // 可视化  
   // chart.drawList(list)
