@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-17 21:30:21
+ * @LastEditTime: 2022-03-21 12:57:12
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: /tstl_playground/src/App.vue
+ * @FilePath: \tstl_playground\src\App.vue
 -->
 <template>
 	<el-config-provider :locale="locale">
@@ -18,7 +18,7 @@
 			<router-link to="/PriorityQueue">{{ $t("nav.priorityQueue") }}</router-link> | 
 			<router-link to="/Stack">{{ $t("nav.stack") }}</router-link> | 
 			<router-link to="/Set">{{ $t("nav.set") }}</router-link> | 
-			<router-link to="/Map">{{ $t("nav.set") }}</router-link> | 
+			<router-link to="/Map">{{ $t("nav.map") }}</router-link> | 
 			<router-link to="/MultiSet">{{ $t("nav.multiSet") }}</router-link> | 
 			<router-link to="/MultiMap">{{ $t("nav.multiMap") }}</router-link> | 
 			<router-link to="/Heap">{{ $t("nav.heap") }}</router-link> | 

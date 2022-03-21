@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-22 09:50:15
- * @LastEditTime: 2022-03-17 18:44:18
+ * @LastEditTime: 2022-03-21 14:30:36
  * @LastEditors: hzheyuan
  * @Description: 迭代器测试
  * @FilePath: \tstl_playground\src\views\MultiSet.vue
@@ -14,11 +14,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { Tree, MultiSet } from 'tstl'
+import { _RBTree, MultiSet } from 'tstl'
 import { Chart } from '../lib/chart'
 
 let chart: any = ref(null)
-let tr: Tree<number, string> = ref<any>(null)
+let tr: _RBTree<number, string> = ref<any>(null)
 
 const test = () => {
   const s = new MultiSet<string>();
@@ -43,15 +43,15 @@ const test = () => {
   console.log('empty', s.empty())
   console.log('size', s.size())
 
-  console.log('find', s.find('cc').key(), s.find('cc').value())
+  console.log('find', s.find('cc').key(), s.find('cc').value)
   console.log('find', s.find('eeee').key())
 
   console.log('count', s.count('zz'))
   console.log('count', s.count('xx'))
   console.log('count', s.count('11'))
 
-  console.log('lower_bound', s.lower_bound('xx').get())
-  console.log('upper_bound', s.upper_bound('xx').get())
+  console.log('lower_bound', s.lower_bound('xx').value)
+  console.log('upper_bound', s.upper_bound('xx').value)
   console.log('equal_range', s.equal_range('yy'))
 
   // 删除

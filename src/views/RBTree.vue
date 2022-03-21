@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-17 15:19:12
- * @LastEditTime: 2022-03-17 21:54:49
+ * @LastEditTime: 2022-03-21 15:53:33
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: /tstl_playground/src/views/RBTree.vue
+ * @FilePath: \tstl_playground\src\views\RBTree.vue
 -->
 <template>
   <div class="red-black-tree">
@@ -26,7 +26,7 @@
         <input type="number" @keyup.enter="onRotateRight" />
       </div>
     </div>
-    <div id="main" style="width: 100vw;height:100vh;"></div>
+    <div id="chart" style="width: 100vw;height:100vh;"></div>
   </div>
 </template>
 
@@ -34,7 +34,7 @@
 import { ref, onMounted } from 'vue'
 import { Chart } from '../lib/chart'
 import { _RBTree, Vector } from 'tstl'
-import { randomNum } from '../helper';
+import { randomNum, testAllIterators, traverseCntr,  Person} from '../helper'
 
 let chart: any = ref(null)
 let tr: _RBTree<number, string> = ref<any>(null)
@@ -92,60 +92,42 @@ const test = () => {
   console.log('verify', tr._verify())
 
   // 可视化整颗树
-  chart = new Chart('main')
+  chart = new Chart('chart')
   chart.drawTree(tr)
 
   // this.tr.inorderWalk(node => console.log(node.key), 14);
   console.log('tree instance: ', tr)
   console.log('size', tr.size);
   console.log('empty', tr.empty);
-  console.log('lower_bound', tr.lower_bound(3).get())
-  console.log('upper_bound', tr.upper_bound(5).get())
+  console.log('lower_bound', tr.lower_bound(3).value)
+  console.log('upper_bound', tr.upper_bound(5).value)
 
   // begin迭代器
-  // let beginItr = tr.begin();
-  // console.log('begin iterator', beginItr.get());
-  // let bstr = ''
-  // for (let item of beginItr) {
-  //   bstr += ` ${item}`
-  // }
-  // console.log('begin loop', bstr)
+  let beginItr = tr.begin();
+  console.log('begin iterator', beginItr.value);
+  let bstr = ''
+  for (let item of beginItr) {
+    bstr += ` ${item}`
+  }
+  console.log('begin loop', bstr)
 
   // entries
-  // let entriesItr = this.tr.begin();
+  // let entriesItr = tr.begin();
   // for(let e of entriesItr.entries()) {
   //   console.log(e)
   // }
-  // keys
-  // let keysItr = this.tr.begin();
+  // // keys
+  // let keysItr = tr.begin();
   // for(let k of keysItr.keys()) {
   //   console.log(k)
   // }
-  // values
-  // let valuesItr = this.tr.begin();
+  // // values
+  // let valuesItr = tr.begin();
   // for(let k of valuesItr.values()) {
   //   console.log(k)
   // }
 
-  // end迭代器
-  // let endItr = tr.end();
-  // console.log('end iterator', endItr);
-  // console.log('iter equal', beginItr.get() === endItr.get())
-
-  // find方法，返回一个迭代器
-  // let findItr = tr.find(10);
-  // console.log('find iterator', findItr);
-
-  // console.log(findItr.get());
-  // console.log(this.tr._black_size(findItr.get()))
-
-  // let fstr = ''
-  // for(let item of findItr) {
-  //   fstr += ` ${item}`
-  // }
-  // console.log('find loop', fstr)
-
-
+  testAllIterators(tr.begin())
 }
 onMounted(test)
 

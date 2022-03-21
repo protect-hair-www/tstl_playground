@@ -1,12 +1,13 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-03 14:42:44
- * @LastEditTime: 2022-03-17 18:41:38
+ * @LastEditTime: 2022-03-21 17:53:39
  * @LastEditors: hzheyuan
  * @Description: 绘制数据结构，方便测试
  * @FilePath: \tstl_playground\src\lib\chart\index.ts
  */
 import * as echarts from 'echarts';
+import { Vector } from 'tstl'
 export class Chart {
     chart: any
 
@@ -16,7 +17,7 @@ export class Chart {
 
     createChart(id: string) {
         const chartDom: HTMLElement | null = document.getElementById(id);
-        if(chartDom) this.chart = echarts.init(chartDom);
+        if (chartDom) this.chart = echarts.init(chartDom);
     }
 
     getTreeData = (tr: any) => {
@@ -50,7 +51,7 @@ export class Chart {
     getHeapData = (heap: any) => {
         const n = heap.size()
         const dfs = (idx: any) => {
-            if (idx >= n)  return { name: 'nil', itemStyle: { color: '#000' }, children: [] };
+            if (idx >= n) return { name: 'nil', itemStyle: { color: '#000' }, children: [] };
             let data: any = {
                 name: `${heap.at(idx)}`,
                 itemStyle: {
@@ -167,7 +168,7 @@ export class Chart {
         }
 
         cur = list.begin()
-        while(cur.hasNext()) {
+        while (cur.hasNext()) {
             let curValue = cur.getValue(); cur.next()
             let nextValue = cur.getValue()
             // console.log(curValue, nextValue)
@@ -202,7 +203,6 @@ export class Chart {
 
     drawList(list: any) {
         const { data, links } = this.getListData(list)
-        console.log(data, links)
         this.chart.setOption(
             {
                 title: {
@@ -235,6 +235,63 @@ export class Chart {
                 ]
             }
         )
+    }
+
+    getVectorData<T>(vec: Vector<T>) {
+        let len = vec.size(), i: number = 0;
+        let indexs = [], data: any[] = []
+        while (i < len) {
+            indexs.push(i);
+            let v = vec.at(i);
+            let s = {
+                name: v,
+                value: 1,
+                label: {
+                    show: true,
+                    with: 100,
+                    formatter: '{b}'
+                },
+                emphasis: {
+                    focus: 'series'
+                }
+            };
+            data.push(s)
+            i++;
+        }
+        return { data, indexs }
+    }
+
+    drawVector<T>(vec: Vector<T>) {
+        let { data, indexs } = this.getVectorData(vec);
+        console.log(data, indexs)
+        let option = {
+            tooltip: {},
+            legend: {},
+            xAxis: {
+                data: indexs
+            },
+            yAxis: {
+                show: false
+            },
+            series: [{
+                name: "Vector",
+                type: "bar",
+                barCategoryGap: '0%',
+                data: data,
+            }]
+        };
+        this.chart.setOption(option)
+    }
+
+    updateVector<T>(vec: Vector<T>) {
+        const {data, indexs} = this.getVectorData(vec);
+        console.log(data, indexs)
+        let op = this.chart.getOption();
+        op.xAxis[0].data = indexs;
+        op.series[0].data = data;
+        console.log(op)
+        // this.chart.clear()
+        this.chart.setOption(op, { notMerge: true });
     }
 
     updateList(list: any) {
