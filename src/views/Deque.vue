@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-17 18:43:39
+ * @LastEditTime: 2022-03-21 21:04:42
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Deque.vue
+ * @FilePath: /tstl_playground/src/views/Deque.vue
 -->
 <template>
   <div class="Deque-test">
@@ -29,7 +29,7 @@
         <button @click="onPopBack">pop_back</button>
       </div>
     </div>
-    <div id="list-box" style="width: 100vw;height:100vh;"></div>
+    <div id="chart" style="width: 100vw;height:100vh;"></div>
   </div>
 </template>
 
@@ -42,16 +42,18 @@ import { testAllIterators, traverseCntr } from '../helper'
 let chart: any = ref(null)
 let deq: Deque<string> = ref<any>(null);
 
-const onPushBack = (e) => {
-  const v = e.target.value
+const onPushBack = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = target.value
   deq.push_back(v)
-  //   chart.updateList(list)
+  chart.updateVector(deq)
 }
 
-const onPushFront = (e) => {
-  const v = e.target.value
-  deq.push_back(v)
-  //   chart.updateList(list)
+const onPushFront = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = target.value
+  deq.push_front(v)
+  chart.updateVector(deq)
 }
 
 const onGetFront = () => {
@@ -62,14 +64,14 @@ const onGetBack = () => {
   console.log(deq.back())
 }
 
-const onPopFront = (e) => {
-  deq.pop_back()
-  //   chart.updateList(list)
+const onPopFront = () => {
+  deq.pop_front()
+  chart.updateVector(deq)
 }
 
-const onPopBack = (e) => {
+const onPopBack = () => {
   deq.pop_back()
-  //   chart.updateList(list)
+  chart.updateVector(deq)
 }
 
 const test = () => {
@@ -86,80 +88,84 @@ const test = () => {
   deq.push_back('5')
   console.log(deq)
 
+  chart = new Chart('chart')
+  chart.drawVector(deq)
+
+
   // 可视化  
   // chart.drawList(list)
 
-  console.log('=====Iterator=====')
-  traverseCntr(deq, 'iterator')
-  testAllIterators(deq)
+  // console.log('=====Iterator=====')
+  // traverseCntr(deq, 'iterator')
+  // testAllIterators(deq)
 
-  console.log('=====Capacity=====')
-  console.log('empty', deq.empty())
-  console.log('size', deq.size())
+  // console.log('=====Capacity=====')
+  // console.log('empty', deq.empty())
+  // console.log('size', deq.size())
 
-  console.log('=====Element Access=====')
-  console.log('front', deq.front())
-  console.log('back', deq.back())
+  // console.log('=====Element Access=====')
+  // console.log('front', deq.front())
+  // console.log('back', deq.back())
 
-  console.log('=====Modifiers=====')
-  let itr = deq.begin()
-  itr.next()
-  deq.insert(itr, '5')
-  traverseCntr(deq, 'begin next insert 5')
+  // console.log('=====Modifiers=====')
+  // let itr = deq.begin()
+  // itr.next()
+  // deq.insert(itr, '5')
+  // traverseCntr(deq, 'begin next insert 5')
 
-  deq.insert(deq.end(), '2')
-  traverseCntr(deq, 'insert at en with 2')
+  // deq.insert(deq.end(), '2')
+  // traverseCntr(deq, 'insert at en with 2')
 
-  itr = deq.begin()
-  itr.next(); itr.next()
-  deq.insert(itr, 5, '7')
-  traverseCntr(deq, 'insert at begin.next with 5 7')
+  // itr = deq.begin()
+  // itr.next(); itr.next()
+  // deq.insert(itr, 5, '7')
+  // traverseCntr(deq, 'insert at begin.next with 5 7')
 
-  itr = deq.begin()
-  itr.next()
-  deq.insert(itr, deq.begin(), deq.end())
-  traverseCntr(deq, 'inset a range of iterator')
+  // itr = deq.begin()
+  // itr.next()
+  // deq.insert(itr, deq.begin(), deq.end())
+  // traverseCntr(deq, 'inset a range of iterator')
 
-  deq.erase(deq.begin())
-  traverseCntr(deq, 'erase begin')
+  // deq.erase(deq.begin())
+  // traverseCntr(deq, 'erase begin')
 
-  deq.resize(10, '1')
-  traverseCntr(deq, 'resize of 10 1')
-  deq.resize(15, '1')
-  traverseCntr(deq, 'resize of 15 1')
+  // deq.resize(10, '1')
+  // traverseCntr(deq, 'resize of 10 1')
+  // deq.resize(15, '1')
+  // traverseCntr(deq, 'resize of 15 1')
 
-  deq.resize(5, '5')
-  traverseCntr(deq, 'resize 5 5')
+  // deq.resize(5, '5')
+  // traverseCntr(deq, 'resize 5 5')
 
-  console.log('=====Operations=====')
-  deq.assign(6, '5')
-  traverseCntr(deq, 'assign 6 5')
+  // console.log('=====Operations=====')
+  // deq.assign(6, '5')
+  // traverseCntr(deq, 'assign 6 5')
 
-  let arr = ['1', '2', '4', '3']
-  deq.assign(arr)
-  traverseCntr(deq, 'assign iterable cntr')
+  // let arr = ['1', '2', '4', '3']
+  // deq.assign(arr)
+  // traverseCntr(deq, 'assign iterable cntr')
 
-  let deq2 = new Deque<string>();
-  deq2.push_back('3')
-  deq2.push_back('5')
-  deq2.push_back('2')
-  deq.assign(deq2.begin(), deq2.end())
-  traverseCntr(deq, 'assign with iterator')
+  // let deq2 = new Deque<string>();
+  // deq2.push_back('3')
+  // deq2.push_back('5')
+  // deq2.push_back('2')
+  // deq.assign(deq2.begin(), deq2.end())
+  // traverseCntr(deq, 'assign with iterator')
 
-  deq2.clear()
-  deq2.push_back('8')
-  deq2.push_back('9')
-  deq2.push_back('10')
-  deq.swap(deq2)
-  traverseCntr(deq, 'swap two deq')
-  traverseCntr(deq2, 'swap two deq')
+  // deq2.clear()
+  // deq2.push_back('8')
+  // deq2.push_back('9')
+  // deq2.push_back('10')
+  // deq.swap(deq2)
+  // traverseCntr(deq, 'swap two deq')
+  // traverseCntr(deq2, 'swap two deq')
 
-  deq.clear()
-  traverseCntr(deq, 'clear')
+  // deq.clear()
+  // traverseCntr(deq, 'clear')
 
-  deq.emplace<String>(deq.begin(), String, '3')
-  deq.emplace_back<String>(String, '5')
-  traverseCntr(deq, 'emplace')
+  // deq.emplace<String>(deq.begin(), String, '3')
+  // deq.emplace_back<String>(String, '5')
+  // traverseCntr(deq, 'emplace')
 }
 
 onMounted(test)
