@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-21 22:03:28
+ * @LastEditTime: 2022-03-22 11:23:15
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: /tstl_playground/src/views/Vector.vue
+ * @FilePath: \tstl_playground\src\views\Vector.vue
 -->
 <template>
   <div class="Vector-test">
@@ -23,32 +23,27 @@
         <button @click="onPopBack">pop_back</button>
       </div>
     </div>
-    <Chart type="vector" :cntr="c"/>
+    <Chart type="Vector" :cntr="vecRefs"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import Chart from '../components/chart.vue'
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Vector } from 'tstl'
-// import { Chart } from '../lib/chart'
 import { testAllIterators, traverseCntr,  Person} from '../helper'
-// let chart: any = ref(null)
-// let vec: Vector<string> = ref(null);
-let vec = new Vector<string>()
-
-const c = reactive(vec);
+let vecCntr: Vector<string> = new Vector<string>()
+let vecRefs = ref<Vector<string>>(vecCntr);
+let vec = vecRefs.value;
 
 const onPushBack = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
   vec.push_back(v)
-  // chart.updateVector(vec)
 }
 
 const onPopBack = () => {
   vec.pop_back()
-  // chart.updateVector(vec)
 }
 
 const onGetFront = () => {
@@ -91,12 +86,13 @@ const testObject = () => {
 
 // test js primitive type
 const testPrimitive = () => {
+  // let vec = vecRefs.value;
   vec.push_back('1')
   vec.push_back('2')
   vec.push_back('3')
   vec.push_back('4')
   vec.push_back('5')
-  console.log(vec)
+  // console.log(vecRefs.value)
 
   // chart = new Chart('chart')
   // chart.drawVector(vec)

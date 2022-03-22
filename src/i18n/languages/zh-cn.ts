@@ -1,7 +1,7 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-21 18:39:07
+ * @LastEditTime: 2022-03-22 15:06:32
  * @LastEditors: hzheyuan
  * @Description: 
  * @FilePath: \tstl_playground\src\i18n\languages\zh-cn.ts
@@ -21,11 +21,14 @@ export const lang = {
         vector: "Vector",
         list: "List",
         deque: "Deque",
-        priorityQueue: "PriorityQueuq",
 
         // adapter
         queue: "Queue",
         stack: "Stack",
+
+        // algorithm
+        heap: "Heap",
+        priorityQueue: "PriorityQueue",
 
         // associative container
         set: "Set",
@@ -36,13 +39,11 @@ export const lang = {
         // rb tree
         tree: 'Tree',
 
-        // algorithm
-        heap: "Heap",
-        
+       
         // Algorithms 
         algorithmsIntro:  "AlgorithmsIntro",
         algorithms: "Algorithms",
-        nonModifying: "NonModifying",
+        noneModifying: "NoneModifying",
         modifying: "Modifying",
         minMax: "MinMax",
         partition: "Partition",

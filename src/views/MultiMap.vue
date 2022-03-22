@@ -1,82 +1,117 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-22 09:50:15
- * @LastEditTime: 2022-03-21 14:29:59
+ * @LastEditTime: 2022-03-22 16:06:27
  * @LastEditors: hzheyuan
  * @Description: 迭代器测试
  * @FilePath: \tstl_playground\src\views\MultiMap.vue
 -->
 <template>
-  <div class="Set-test">
-    <div id="multimap-box" style="width: 100vw;height:100vh;"></div>
+  <div class="Map-test">
+    <div class="op">
+      <div>
+        <label for="insert">insert</label>
+        <input type="text" @keyup.enter="onInsert" />
+      </div>
+      <div>
+        <label for="delete">delete</label>
+        <input type="text" @keyup.enter="onDelete" />
+      </div>
+      <div>
+        <label for="delete">lower_bound</label>
+        <input type="text" @keyup.enter="getLowerBound" />
+      </div>
+      <div>
+        <label for="delete">upper_bound</label>
+        <input type="text" @keyup.enter="getUpperBound" />
+      </div>
+    </div>
+    <Chart type="MultiMap" :cntr="mapRefs" :opCnt="opCnt"/>
   </div>
 </template>
 
 <script setup lang="ts">
+import Chart from '../components/chart.vue'
 import { onMounted, ref } from 'vue'
-import { _Tree, MultiMap } from 'tstl'
-import { Chart } from '../lib/chart'
+import { _RBTree, MultiMap } from 'tstl'
+import { randomNum } from '@/helper';
 
-let chart: any = ref(null)
-let tr: _Tree<number, string> = ref<any>(null)
+const opCnt = ref<number>(0)
+const mapCntr = new MultiMap<string, number>();
+const mapRefs = ref<MultiMap<string, number>>(mapCntr)
+const m = mapRefs.value;
+
+const onInsert = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const k = target.value
+  const n = m.insert(k, randomNum(1, 100));
+  opCnt.value++
+}
+
+const onDelete = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = target.value
+  m.erase(v);
+  opCnt.value++
+}
+
+const getLowerBound = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = target.value
+  console.log('lower_bound', m.lower_bound(v).value)
+}
+
+const getUpperBound = (e: Event) => {
+  const target = (<HTMLInputElement>e.target)
+  const v = target.value
+  console.log('upper_bound', m.upper_bound(v).value)
+}
 
 const test = () => {
-  const s = new MultiMap<string, number>();
-  console.log('empty', s.empty())
+  m.insert('a', 1)
+  m.insert('b', 5)
+  m.insert('c', 2)
+  m.insert('d', 9)
+  m.insert('x', 3)
+  m.insert('y', 4)
+  m.insert('z', 7)
+  opCnt.value++;
 
-  s.insert('aa', 1)
-  s.insert('cc', 2)
-  s.insert('xx', 3)
-  s.insert('yy', 4)
-  s.insert('zz', 5)
-  s.insert('zz', 4)
-  s.insert('zz', 7)
-  s.insert('zz', 9)
-  s.insert('dd', 8)
-  s.insert('bb', 11)
-  s.insert('dd', 21)
+  console.log('empty', m.empty())
+  console.log('size', m.size())
 
-  // 可视化整颗树
-  chart = new Chart('multimap-box')
-  chart.drawTree(s._t)
+  // console.log('find', s.find('cc').key(), s.find('cc').value)
+  // console.log('find', s.find('eeee').key())
 
-  console.log('empty', s.empty())
-  console.log('size', s.size())
+  // console.log('count', s.count('cc'))
+  // console.log('count', s.count('xx'))
 
-  console.log('find', s.find('cc').key(), s.find('cc').value)
-  console.log('find', s.find('eeee').key())
+  // console.log('lower_bound', s.lower_bound('xx').value)
+  // console.log('upper_bound', s.upper_bound('xx').value)
+  // console.log('equal_range', s.equal_range('yy'))
 
-  console.log('count', s.count('zz'))
-  console.log('count', s.count('xx'))
-  console.log('count', s.count('11'))
+  // // 删除
+  // console.log('erase', s.erase('cc'))
+  // console.log('erase', s.erase('kkkk'))
 
-  console.log('lower_bound', s.lower_bound('xx').value)
-  console.log('upper_bound', s.upper_bound('xx').value)
-  console.log('equal_range', s.equal_range('yy'))
+  // console.log('===keys====')
+  // let keys = s.begin().keys();
+  // for(let k of keys) {
+  //   console.log(k)
+  // }
 
-  // 删除
-  console.log('erase', s.erase('cc'))
-  console.log('erase', s.erase('kkkk'))
+  // console.log('===values====')
+  // let values = s.begin().values();
+  // for (let item of values) {
+  //   console.log(item)
+  // }
 
-  console.log('===keys====')
-  let keys = s.begin().keys();
-  for(let k of keys) {
-    console.log(k)
-  }
+  // console.log('===entries====')
+  // let entries = s.begin().entries();
+  // for (let item of entries) {
+  //   console.log(item)
+  // }
 
-  console.log('===values====')
-  let values = s.begin().values();
-  for (let item of values) {
-    console.log(item)
-  }
-
-  console.log('===entries====')
-  let entries = s.begin().entries();
-  for (let item of entries) {
-    console.log(item)
-  }
-
-  s.clear()
 }
 onMounted(test)
 

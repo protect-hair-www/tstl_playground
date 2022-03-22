@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-12 12:10:21
- * @LastEditTime: 2022-03-17 18:42:59
+ * @LastEditTime: 2022-03-22 15:18:32
  * @LastEditors: hzheyuan
  * @Description: priority queue
  * @FilePath: \tstl_playground\src\views\PriorityQueue.vue
@@ -18,19 +18,19 @@
                 <button @click="onGetTop">top</button>
             </div>
         </div>
-        <div id="priorityqueue-box" style="width: 100vw;height:100vh;"></div>
+        <Chart type="PriorityQueue" :cntr="pqRefs"/>
     </div>
 </template>
 
 <script setup lang="ts">
+import Chart from '../components/chart.vue'
 import { ref, onMounted, queuePostFlushCb } from 'vue'
-import { Chart } from '../lib/chart'
 import { Vector, PriorityQueue, less, greater } from 'tstl'
 import { testAllIterators, traverseCntr } from '../helper'
 
-let chart: any = ref(null)
-let pq: PriorityQueue<number, Vector<number>> = ref<any>(null);
-
+let pqCntr = new PriorityQueue<number>(Vector, less, true);
+let pqRefs = ref<PriorityQueue<number>>(pqCntr);
+let pq = pqRefs.value;
 
 const onGetTop = () => {
     console.log(pq.top())
@@ -49,12 +49,6 @@ const onPop = () => {
 }
 
 const test = () => {
-    // construt a echarts
-    chart = new Chart('priorityqueue-box')
-
-    // create a sequence container
-    // pq = new PriorityQueue<number, Vector>(greater, Vector);
-    pq = new PriorityQueue<number, Vector<number>>(Vector, less, true);
     pq.push(10)
     pq.push(20)
     pq.push(30)
@@ -68,7 +62,6 @@ const test = () => {
     pq.push(19)
     console.log('push 19')
     console.log(pq.top(), 'top')
-
     console.log('pop all of pq: ')
     // while(pq.size() > 0) {
     //     console.log(pq.top());

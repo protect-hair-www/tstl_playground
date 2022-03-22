@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-17 18:43:21
+ * @LastEditTime: 2022-03-22 14:05:41
  * @LastEditors: hzheyuan
  * @Description: 
  * @FilePath: \tstl_playground\src\views\List.vue
@@ -28,33 +28,30 @@
         <button @click="onPopFront">pop_front</button>
         <button @click="onPopBack">pop_back</button>
       </div>
-
     </div>
-    <div id="list-box" style="width: 100vw;height:100vh;"></div>
+    <Chart type="List" :cntr="listRefs"/>
   </div>
 </template>
 
 <script setup lang="ts">
+import Chart from '../components/chart.vue'
 import { ref, onMounted } from 'vue'
-import { Chart } from '../lib/chart'
 import { List } from 'tstl'
 import { testAllIterators, traverseCntr } from '../helper'
-
-let chart: any = ref(null)
-let list: List<string> = ref<any>(null);
+const listCntr: List<string> = new List<string>();
+const listRefs = ref<List<string>>(listCntr);
+let list = listRefs.value;
 
 const onPushBack = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
   list.push_back(v)
-  chart.updateList(list)
 }
 
 const onPushFront = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value 
   list.push_front(v)
-  chart.updateList(list)
 }
 
 const onGetFront = () => {
@@ -67,185 +64,169 @@ const onGetBack = () => {
 
 const onPopFront = () => {
   list.pop_front()
-  chart.updateList(list)
 }
 
 const onPopBack = () => {
   list.pop_back()
-  chart.updateList(list)
 }
 
 const test = () => {
-  // 可视化整颗树
-  chart = new Chart('list-box')
-
-  // 创建一个list容器
-  list = new List<string>();
-  // list.push_back({key: '1'})
-  // list.push_back({key: '2'})
-  // list.push_back({key: '3'})
-  // list.push_back({key: '4'})
-  // list.push_back({key: '5'})
-
   list.push_back('1')
   list.push_back('2')
   list.push_back('3')
   list.push_back('4')
   list.push_back('5')
 
-  // 测试3种迭代器
-  testAllIterators(list)
+  // // 测试3种迭代器
+  // testAllIterators(list)
 
-  // 可视化  
-  chart.drawList(list)
+  // console.log('=====Iterator=====')
+  // traverseCntr(list)
 
-  console.log('=====Iterator=====')
-  traverseCntr(list)
+  // console.log('=====Capacity=====')
+  // console.log('empty', list.empty())
+  // console.log('size', list.size())
 
-  console.log('=====Capacity=====')
-  console.log('empty', list.empty())
-  console.log('size', list.size())
-
-  console.log('=====Element Access=====')
-  console.log('front', list.front())
-  console.log('back', list.back())
+  // console.log('=====Element Access=====')
+  // console.log('front', list.front())
+  // console.log('back', list.back())
 
 
-  console.log('=====Modifiers=====')
-  let itr = list.begin();
-  itr.next();
-  list.insert(itr, '5')
-  traverseCntr(list, 'begin next insert 5')
+  // console.log('=====Modifiers=====')
+  // let itr = list.begin();
+  // itr.next();
+  // list.insert(itr, '5')
+  // traverseCntr(list, 'begin next insert 5')
 
-  list.insert(list.end(), 2, '20')
-  traverseCntr(list, 'insert at en with 2 20')
+  // list.insert(list.end(), 2, '20')
+  // traverseCntr(list, 'insert at en with 2 20')
 
-  list.assign(2, '11')
-  traverseCntr(list, 'assign 2 11')
+  // list.assign(2, '11')
+  // traverseCntr(list, 'assign 2 11')
 
-  list.erase(list.begin())
-  traverseCntr(list, 'erase begin')
+  // list.erase(list.begin())
+  // traverseCntr(list, 'erase begin')
 
-  list.resize(5, '5')
-  traverseCntr(list, 'resize 5 5')
+  // list.resize(5, '5')
+  // traverseCntr(list, 'resize 5 5')
 
-  list.push_back('4')
-  list.push_back('5')
-  list.push_back('5')
-  list.push_back('5')
-  list.unique()
-  traverseCntr(list, 'unique list')
+  // list.push_back('4')
+  // list.push_back('5')
+  // list.push_back('5')
+  // list.push_back('5')
+  // list.unique()
+  // traverseCntr(list, 'unique list')
 
-  list.resize(2, '5')
-  traverseCntr(list, 'resize 2 5')
+  // list.resize(2, '5')
+  // traverseCntr(list, 'resize 2 5')
 
-  list.clear()
-  traverseCntr(list, 'clear')
+  // list.clear()
+  // traverseCntr(list, 'clear')
 
-  console.log('=====Operations=====')
-  list.push_back('1')
-  list.push_back('2')
-  list.push_back('3')
-  list.push_back('4')
-  list.push_back('5')
+  // console.log('=====Operations=====')
+  // list.push_back('1')
+  // list.push_back('2')
+  // list.push_back('3')
+  // list.push_back('4')
+  // list.push_back('5')
 
-  const list2 = new List<string>()
-  list2.push_back('6')
-  list2.push_back('7')
-  list2.push_back('8')
-  list2.push_back('9')
+  // const list2 = new List<string>()
+  // list2.push_back('6')
+  // list2.push_back('7')
+  // list2.push_back('8')
+  // list2.push_back('9')
 
-  traverseCntr(list, 'list')
-  itr = list.begin()
-  itr.next()
-  list.splice(itr, list2)
+  // traverseCntr(list, 'list')
+  // itr = list.begin()
+  // itr.next()
+  // list.splice(itr, list2)
 
-  traverseCntr(list, 'splice list2 of  6,7,8,9')
-  traverseCntr(list2, 'after splice list2')
+  // traverseCntr(list, 'splice list2 of  6,7,8,9')
+  // traverseCntr(list2, 'after splice list2')
 
-  list2.splice(list2.begin(), list, itr)
-  traverseCntr(list, 'splice one element')
-  traverseCntr(list2, 'splice one element')
+  // list2.splice(list2.begin(), list, itr)
+  // traverseCntr(list, 'splice one element')
+  // traverseCntr(list2, 'splice one element')
 
-  itr = list.begin(); itr.next(); itr.next()
-  list.splice(list.begin(), list, itr, list.end())
-  traverseCntr(list, 'splice self range [7, end) to begin')
+  // itr = list.begin(); itr.next(); itr.next()
+  // list.splice(list.begin(), list, itr, list.end())
+  // traverseCntr(list, 'splice self range [7, end) to begin')
 
-  list.remove('8')
-  traverseCntr(list, 'list remove value = 8')
-  list.remove_if((v) => v > '5')
-  traverseCntr(list, 'list remove if value > 5')
+  // list.remove('8')
+  // traverseCntr(list, 'list remove value = 8')
+  // list.remove_if((v) => v > '5')
+  // traverseCntr(list, 'list remove if value > 5')
 
-  list.push_back('6')
-  list.push_back('6')
-  list.push_back('7')
-  list.push_back('7')
-  list.push_back('7')
-  list.push_back('8')
-  list.push_back('8')
-  list.push_back('9')
-  traverseCntr(list, 'list push_back 6 6 7 7 7 8 8 9')
+  // list.push_back('6')
+  // list.push_back('6')
+  // list.push_back('7')
+  // list.push_back('7')
+  // list.push_back('7')
+  // list.push_back('8')
+  // list.push_back('8')
+  // list.push_back('9')
+  // traverseCntr(list, 'list push_back 6 6 7 7 7 8 8 9')
 
-  list.unique()
-  traverseCntr(list, 'list unique')
+  // list.unique()
+  // traverseCntr(list, 'list unique')
 
-  list.clear()
-  console.log('clear list');
+  // list.clear()
+  // console.log('clear list');
   
-  list.push_back('1')
-  list.push_back('2')
-  list.push_back('3')
-  list.push_back('5')
+  // list.push_back('1')
+  // list.push_back('2')
+  // list.push_back('3')
+  // list.push_back('5')
 
-  list2.clear()
-  list2.push_back('2')
-  list2.push_back('3')
-  list2.push_back('4')
-  list2.push_back('6')
-  list2.push_back('8')
+  // list2.clear()
+  // list2.push_back('2')
+  // list2.push_back('3')
+  // list2.push_back('4')
+  // list2.push_back('6')
+  // list2.push_back('8')
 
-  list.merge(list2)
-  traverseCntr(list, 'list merge')
+  // list.merge(list2)
+  // traverseCntr(list, 'list merge')
 
-  list.clear()
-  list.push_back('1')
-  list.push_back('2')
-  list.push_back('3')
-  list.push_back('5')
+  // list.clear()
+  // list.push_back('1')
+  // list.push_back('2')
+  // list.push_back('3')
+  // list.push_back('5')
 
-  list2.clear()
-  list2.push_back('4')
-  list2.push_back('6')
-  list2.push_back('8')
-  traverseCntr(list, 'list')
-  traverseCntr(list2, 'list2')
+  // list2.clear()
+  // list2.push_back('4')
+  // list2.push_back('6')
+  // list2.push_back('8')
+  // traverseCntr(list, 'list')
+  // traverseCntr(list2, 'list2')
 
-  list.swap(list2)
-  traverseCntr(list, 'list swap')
-  traverseCntr(list2, 'list2 swap')
+  // list.swap(list2)
+  // traverseCntr(list, 'list swap')
+  // traverseCntr(list2, 'list2 swap')
 
-  list.clear()
-  list.push_back('1')
-  list.push_back('5')
-  list.push_back('3')
-  list.push_back('9')
-  list.push_back('7')
-  list.push_back('7')
-  list.push_back('2')
-  list.push_back('9')
-  list.push_back('2')
-  list.sort()
-  traverseCntr(list, 'list sort')
+  // list.clear()
+  // list.push_back('1')
+  // list.push_back('5')
+  // list.push_back('3')
+  // list.push_back('9')
+  // list.push_back('7')
+  // list.push_back('7')
+  // list.push_back('2')
+  // list.push_back('9')
+  // list.push_back('2')
+  // list.sort()
+  // traverseCntr(list, 'list sort')
 
-  list.reverse()
-  traverseCntr(list, 'list reverse')
+  // list.reverse()
+  // traverseCntr(list, 'list reverse')
 
-  list.clear()
-  list.push_back('1')
-  list.push_back('2')
-  list.push_back('3')
-  list.push_back('4')
-  list.push_back('5')
+  // list.clear()
+  // list.push_back('1')
+  // list.push_back('2')
+  // list.push_back('3')
+  // list.push_back('4')
+  // list.push_back('5')
 }
 
 onMounted(test)

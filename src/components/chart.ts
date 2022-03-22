@@ -1,10 +1,10 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-03 14:42:44
- * @LastEditTime: 2022-03-21 17:53:39
+ * @LastEditTime: 2022-03-22 16:08:33
  * @LastEditors: hzheyuan
  * @Description: 绘制数据结构，方便测试
- * @FilePath: \tstl_playground\src\lib\chart\index.ts
+ * @FilePath: \tstl_playground\src\components\chart.ts
  */
 import * as echarts from 'echarts';
 import { Vector } from 'tstl'
@@ -21,6 +21,7 @@ export class Chart {
     }
 
     getTreeData = (tr: any) => {
+        // console.log(tr.root)
         const dfs = (node: any) => {
             if (node === tr.nil) {
                 return { name: 'nil', itemStyle: { color: '#000' }, children: [] };
@@ -48,28 +49,9 @@ export class Chart {
         return dfs(tr.root)
     }
 
-    getHeapData = (heap: any) => {
-        const n = heap.size()
-        const dfs = (idx: any) => {
-            if (idx >= n) return { name: 'nil', itemStyle: { color: '#000' }, children: [] };
-            let data: any = {
-                name: `${heap.at(idx)}`,
-                itemStyle: {
-                    color: '#f00'
-                },
-                children: []
-            };
-            let left = (idx * 2) + 1, right = 2 * idx + 2;
-            let ld: any = dfs(left); data.children.push(ld);
-            let rd = dfs(right); data.children.push(rd);
-            return data;
-        }
-        let data = dfs(0)
-        return data
-    }
-
-    drawHeap = (heap: any) => {
-        const data = this.getHeapData(heap)
+    drawTree = (tr: any) => {
+        console.log(tr, 'zzzzzzz')
+        const data = this.getTreeData(tr)
         this.chart.setOption(
             ({
                 series: [
@@ -108,8 +90,28 @@ export class Chart {
         )
     }
 
-    drawTree = (tr: any) => {
-        const data = this.getTreeData(tr)
+    getHeapData = (heap: any) => {
+        const n = heap.size()
+        const dfs = (idx: any) => {
+            if (idx >= n) return { name: 'nil', itemStyle: { color: '#000' }, children: [] };
+            let data: any = {
+                name: `${heap.at(idx)}`,
+                itemStyle: {
+                    color: '#f00'
+                },
+                children: []
+            };
+            let left = (idx * 2) + 1, right = 2 * idx + 2;
+            let ld: any = dfs(left); data.children.push(ld);
+            let rd = dfs(right); data.children.push(rd);
+            return data;
+        }
+        let data = dfs(0)
+        return data
+    }
+
+    drawHeap = (heap: any) => {
+        const data = this.getHeapData(heap)
         this.chart.setOption(
             ({
                 series: [
@@ -206,7 +208,7 @@ export class Chart {
         this.chart.setOption(
             {
                 title: {
-                    text: 'List 结构'
+                    text: ''
                 },
                 animationDurationUpdate: 1500,
                 animationEasingUpdate: 'quinticInOut',
@@ -238,6 +240,7 @@ export class Chart {
     }
 
     getVectorData<T>(vec: Vector<T>) {
+        console.log(vec)
         let len = vec.size(), i: number = 0;
         let indexs = [], data: any[] = []
         while (i < len) {
@@ -263,10 +266,7 @@ export class Chart {
 
     drawVector<T>(vec: Vector<T>) {
         let { data, indexs } = this.getVectorData(vec);
-        console.log(data, indexs)
         let option = {
-            tooltip: {},
-            legend: {},
             xAxis: {
                 data: indexs
             },

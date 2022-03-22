@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-21 21:04:42
+ * @LastEditTime: 2022-03-22 14:34:49
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: /tstl_playground/src/views/Deque.vue
+ * @FilePath: \tstl_playground\src\views\Deque.vue
 -->
 <template>
   <div class="Deque-test">
@@ -29,31 +29,30 @@
         <button @click="onPopBack">pop_back</button>
       </div>
     </div>
-    <div id="chart" style="width: 100vw;height:100vh;"></div>
+    <Chart type="Deque" :cntr="deqRefs" />
   </div>
 </template>
 
 <script setup lang="ts">
+import Chart from '../components/chart.vue'
 import { ref, onMounted } from 'vue'
-import { Chart } from '../lib/chart'
 import { Deque } from 'tstl'
 import { testAllIterators, traverseCntr } from '../helper'
 
-let chart: any = ref(null)
-let deq: Deque<string> = ref<any>(null);
+const deqCntr: Deque<string> = new Deque<string>()
+const deqRefs = ref<Deque<string>>(deqCntr);
+let deq = deqRefs.value;
 
 const onPushBack = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
   deq.push_back(v)
-  chart.updateVector(deq)
 }
 
 const onPushFront = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
   deq.push_front(v)
-  chart.updateVector(deq)
 }
 
 const onGetFront = () => {
@@ -66,31 +65,19 @@ const onGetBack = () => {
 
 const onPopFront = () => {
   deq.pop_front()
-  chart.updateVector(deq)
 }
 
 const onPopBack = () => {
   deq.pop_back()
-  chart.updateVector(deq)
 }
 
 const test = () => {
-  // 可视化整颗树
-  //   chart = new Chart('list-box')
-  //   chart.drawList(list)
-
-  // 创建一个list容器
-  deq = new Deque<string>();
   deq.push_back('1')
   deq.push_back('2')
   deq.push_back('3')
   deq.push_back('4')
   deq.push_back('5')
   console.log(deq)
-
-  chart = new Chart('chart')
-  chart.drawVector(deq)
-
 
   // 可视化  
   // chart.drawList(list)

@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-12 12:10:21
- * @LastEditTime: 2022-03-17 18:43:30
+ * @LastEditTime: 2022-03-22 15:09:50
  * @LastEditors: hzheyuan
  * @Description: heap
  * @FilePath: \tstl_playground\src\views\Heap.vue
@@ -20,19 +20,19 @@
                 <button @click="onGetBack">back</button>
             </div>
         </div>
-        <div id="heap-box" style="width: 100vw;height:100vh;"></div>
+        <Chart type="Heap" :cntr="vecRefs"/>
     </div>
 </template>
 
 <script setup lang="ts">
+import Chart from '../components/chart.vue'
 import { ref, onMounted } from 'vue'
-import { Chart } from '../lib/chart'
 import { Vector, makeHeap, popHeap, pushHeap, sortHeap, isHeap, isHeapUntil } from 'tstl'
 import { testAllIterators, traverseCntr } from '../helper'
 
-let chart: any = ref(null)
-let vec: Vector<number> = ref<any>(null);
-
+let vecCntr: Vector<number> = new Vector<number>()
+let vecRefs = ref<Vector<number>>(vecCntr);
+let vec = vecRefs.value;
 
 const onGetFront = () => {
     console.log(vec.front())
@@ -47,29 +47,21 @@ const onPushHeap = (e: Event) => {
     const v = Number(target.value)
     vec.push_back(v)
     pushHeap(vec.begin(), vec.end())
-    chart.updateHeap(vec)
     traverseCntr(vec, `push heap ${v}`)
 }
 
 const onPopHeap = () => {
     let popValue = popHeap(vec.begin(), vec.end())
     vec.pop_back()
-    chart.updateHeap(vec)
     traverseCntr(vec, `pop heap ${popValue}`);
 }
 
 const onSortHeap = () => {
     sortHeap(vec.begin(), vec.end());
     traverseCntr(vec, `heap sort`);
-    chart.updateHeap(vec)
 } 
 
 const test = () => {
-    // construt a echarts
-    chart = new Chart('heap-box')
-
-    // create a sequence container
-    vec = new Vector<number>();
     vec.push_back(10)
     vec.push_back(20)
     vec.push_back(30)
@@ -89,9 +81,6 @@ const test = () => {
     let popValue = popHeap(vec.begin(), vec.end())
     vec.pop_back() // origin container element shoud remove 
     traverseCntr(vec, `pop heap ${popValue}`);
-
-    // draw the chart
-    chart.drawHeap(vec)
 }
 
 onMounted(test)

@@ -1,78 +1,67 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-22 14:39:32
+ * @LastEditTime: 2022-03-22 15:01:18
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Queue.vue
+ * @FilePath: \tstl_playground\src\views\Stack.vue
 -->
 <template>
-  <div class="queue-test">
+  <div class="stack-test">
     <div class="op">
       <div>
         <label for="insert">push</label>
         <input type="number" @keyup.enter="onPush" />
       </div>
       <div>
-        <button @click="onGetFront">front</button>
-        <button @click="onGetBack">back</button>
+        <button @click="onGetTop">top</button>
         <button @click="onPop">pop</button>
       </div>
     </div>
-    <Chart type="Queue" :cntr="qRefs"/>
+    <Chart type="Stack" :cntr="sRefs"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import Chart from '../components/chart.vue'
 import { ref, onMounted } from 'vue'
+import { Stack } from 'tstl'
 import { testAllIterators, traverseCntr } from '../helper'
-import { Queue } from 'tstl'
 
-let qCntr: Queue<string> = new Queue<string>()
-let qRefs = ref<Queue<string>>(qCntr);
-let q = qRefs.value;
+let sCntr: Stack<string> = new Stack<string>()
+let sRefs = ref<Stack<string>>(sCntr);
+let s = sRefs.value;
 
 const onPush = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
-  q.push(v)
+  s.push(v)
 }
 
 const onPop = () => {
-  q.pop()
+  s.pop()
 }
 
-const onGetFront = () => {
-  console.log(q.front())
-}
-
-const onGetBack = () => {
-  console.log(q.back())
+const onGetTop = () => {
+  console.log(s.top())
 }
 
 const test = () => {
-  q.push('1')
-  q.push('2')
-  q.push('3')
-  q.push('4')
-  q.push('5')
-  console.log(q)
-
-  // 可视化  
-  // chart.drawList(list)
+  s.push('1')
+  s.push('2')
+  s.push('3')
+  s.push('4')
+  s.push('5')
 
   console.log('=====Iterator=====')
   // traverseCntr(q, 'iterator')
 
   console.log('=====Capacity=====')
-  console.log('empty', q.empty())
-  console.log('size', q.size())
+  console.log('empty', s.empty())
+  console.log('size', s.size())
 
   console.log('=====Element Access=====')
-  console.log('front', q.front())
-  console.log('back', q.back())
-
+  console.log('front', s.top())
   console.log('=====Modifiers=====')
 }
 
