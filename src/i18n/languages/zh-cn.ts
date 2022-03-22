@@ -1,7 +1,7 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-22 15:06:32
+ * @LastEditTime: 2022-03-22 16:26:13
  * @LastEditors: hzheyuan
  * @Description: 
  * @FilePath: \tstl_playground\src\i18n\languages\zh-cn.ts
@@ -15,7 +15,7 @@ export const lang = {
         // example: "示例",
 
         // 容器
-        containersIntro: "ContainersIntro",
+        containers: "Containers",
         rbtree: "RBTree",
         // sequences container
         vector: "Vector",
@@ -41,8 +41,7 @@ export const lang = {
 
        
         // Algorithms 
-        algorithmsIntro:  "AlgorithmsIntro",
-        algorithms: "Algorithms",
+        algorithms:  "Algorithms",
         noneModifying: "NoneModifying",
         modifying: "Modifying",
         minMax: "MinMax",

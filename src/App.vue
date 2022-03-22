@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-22 15:06:56
+ * @LastEditTime: 2022-03-22 16:28:22
  * @LastEditors: hzheyuan
  * @Description: 
  * @FilePath: \tstl_playground\src\App.vue
@@ -10,7 +10,7 @@
 	<el-config-provider :locale="locale">
 		<div id="nav">
 			<div class="links container">
-				<router-link to="/ContainersIntro">{{ $t("nav.containersIntro") }}</router-link>|
+				<router-link to="/Containers">{{ $t("nav.containers") }}</router-link>：
 				<router-link to="/RBTree">{{ $t("nav.rbtree") }}</router-link>|
 				<router-link to="/Vector">{{ $t("nav.vector") }}</router-link>|
 				<router-link to="/List">{{ $t("nav.list") }}</router-link>|
@@ -27,11 +27,11 @@
 				<router-link to="/MultiMap">{{ $t("nav.multiMap") }}</router-link>
 			</div>
 			<div class="links algorithms">
-				<router-link to="/AlgorithmsIntro">{{ $t("nav.algorithmsIntro") }}</router-link>|
+				<router-link to="/Algorithms">{{ $t("nav.algorithms") }}</router-link>：
 				<router-link to="/Modifying">{{ $t("nav.modifying") }}</router-link>|
 				<router-link to="/NoneModifying">{{ $t("nav.noneModifying") }}</router-link>|
 				<router-link to="/MinMax">{{ $t("nav.minMax") }}</router-link>|
-				<router-link to="/Parition">{{ $t("nav.parition") }}</router-link>|
+				<router-link to="/Partition">{{ $t("nav.partition") }}</router-link>|
 				<router-link to="/BinarySearch">{{ $t("nav.binarySearch") }}</router-link>|
 				<router-link to="/Sorting">{{ $t("nav.sorting") }}</router-link>|
 				<router-link to="/Merge">{{ $t("nav.merge") }}</router-link>
