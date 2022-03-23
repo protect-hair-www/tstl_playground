@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-22 16:28:22
+ * @LastEditTime: 2022-03-23 22:04:23
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\App.vue
+ * @FilePath: /tstl_playground/src/App.vue
 -->
 <template>
 	<el-config-provider :locale="locale">
@@ -28,8 +28,8 @@
 			</div>
 			<div class="links algorithms">
 				<router-link to="/Algorithms">{{ $t("nav.algorithms") }}</router-link>：
-				<router-link to="/Modifying">{{ $t("nav.modifying") }}</router-link>|
 				<router-link to="/NoneModifying">{{ $t("nav.noneModifying") }}</router-link>|
+				<router-link to="/Modifying">{{ $t("nav.modifying") }}</router-link>|
 				<router-link to="/MinMax">{{ $t("nav.minMax") }}</router-link>|
 				<router-link to="/Partition">{{ $t("nav.partition") }}</router-link>|
 				<router-link to="/BinarySearch">{{ $t("nav.binarySearch") }}</router-link>|
