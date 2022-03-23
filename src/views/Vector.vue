@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-22 11:23:15
+ * @LastEditTime: 2022-03-23 13:23:13
  * @LastEditors: hzheyuan
  * @Description: 
  * @FilePath: \tstl_playground\src\views\Vector.vue
@@ -28,10 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
 import { ref, onMounted } from 'vue'
 import { Vector } from 'tstl'
 import { testAllIterators, traverseCntr,  Person} from '../helper'
+import Chart from '../components/chart.vue'
+
 let vecCntr: Vector<string> = new Vector<string>()
 let vecRefs = ref<Vector<string>>(vecCntr);
 let vec = vecRefs.value;
@@ -86,87 +87,79 @@ const testObject = () => {
 
 // test js primitive type
 const testPrimitive = () => {
-  // let vec = vecRefs.value;
   vec.push_back('1')
   vec.push_back('2')
   vec.push_back('3')
   vec.push_back('4')
   vec.push_back('5')
-  // console.log(vecRefs.value)
 
-  // chart = new Chart('chart')
-  // chart.drawVector(vec)
+  console.log('=====Iterator=====')
+  traverseCntr(vec, 'iterator')
+  testAllIterators(vec)
 
-  // 可视化  
-  // chart.drawList(list)
+  console.log('=====Capacity=====')
+  console.log('empty', vec.empty())
+  console.log('size', vec.size())
 
-  // console.log('=====Iterator=====')
-  // traverseCntr(vec, 'iterator')
-  // testAllIterators(vec)
+  console.log('=====Element Access=====')
+  console.log('front', vec.front())
+  console.log('back', vec.back())
 
-  // console.log('=====Capacity=====')
-  // console.log('empty', vec.empty())
-  // console.log('size', vec.size())
+  console.log('=====Modifiers=====')
+  let itr = vec.begin()
+  itr.next()
+  vec.insert(itr, '5')
+  traverseCntr(vec, 'begin next insert 5')
 
-  // console.log('=====Element Access=====')
-  // console.log('front', vec.front())
-  // console.log('back', vec.back())
+  vec.insert(vec.end(), '2')
+  traverseCntr(vec, 'insert at en with 2')
 
-  // console.log('=====Modifiers=====')
-  // let itr = vec.begin()
-  // itr.next()
-  // vec.insert(itr, '5')
-  // traverseCntr(vec, 'begin next insert 5')
+  itr = vec.begin()
+  itr.next(); itr.next()
+  vec.insert(itr, 5, '7')
+  traverseCntr(vec, 'insert at begin.next with 5 7')
 
-  // vec.insert(vec.end(), '2')
-  // traverseCntr(vec, 'insert at en with 2')
+  itr = vec.begin()
+  itr.next()
+  vec.insert(itr, vec.begin(), vec.end())
+  traverseCntr(vec, 'inset a range of iterator')
 
-  // itr = vec.begin()
-  // itr.next(); itr.next()
-  // vec.insert(itr, 5, '7')
-  // traverseCntr(vec, 'insert at begin.next with 5 7')
+  vec.erase(vec.begin())
+  traverseCntr(vec, 'erase begin')
 
-  // itr = vec.begin()
-  // itr.next()
-  // vec.insert(itr, vec.begin(), vec.end())
-  // traverseCntr(vec, 'inset a range of iterator')
+  vec.resize(10, '1')
+  traverseCntr(vec, 'resize of 10 1')
+  vec.resize(15, '1')
+  traverseCntr(vec, 'resize of 15 1')
 
-  // vec.erase(vec.begin())
-  // traverseCntr(vec, 'erase begin')
+  vec.resize(5, '5')
+  traverseCntr(vec, 'resize 5 5')
 
-  // vec.resize(10, '1')
-  // traverseCntr(vec, 'resize of 10 1')
-  // vec.resize(15, '1')
-  // traverseCntr(vec, 'resize of 15 1')
+  console.log('=====Operations=====')
+  vec.assign(6, '5')
+  traverseCntr(vec, 'assign 6 5')
 
-  // vec.resize(5, '5')
-  // traverseCntr(vec, 'resize 5 5')
+  let arr = ['1', '2', '4', '3']
+  vec.assign(arr)
+  traverseCntr(vec, 'assign iterable cntr')
 
-  // console.log('=====Operations=====')
-  // vec.assign(6, '5')
-  // traverseCntr(vec, 'assign 6 5')
+  let vec2 = new Vector<string>();
+  vec2.push_back('3')
+  vec2.push_back('5')
+  vec2.push_back('2')
+  vec.assign(vec2.begin(), vec2.end())
+  traverseCntr(vec, 'assign with iterator')
 
-  // let arr = ['1', '2', '4', '3']
-  // vec.assign(arr)
-  // traverseCntr(vec, 'assign iterable cntr')
+  vec2.clear()
+  vec2.push_back('8')
+  vec2.push_back('9')
+  vec2.push_back('10')
+  vec.swap(vec2)
+  traverseCntr(vec, 'swap two vec')
+  traverseCntr(vec2, 'swap two vec')
 
-  // let vec2 = new Vector<string>();
-  // vec2.push_back('3')
-  // vec2.push_back('5')
-  // vec2.push_back('2')
-  // vec.assign(vec2.begin(), vec2.end())
-  // traverseCntr(vec, 'assign with iterator')
-
-  // vec2.clear()
-  // vec2.push_back('8')
-  // vec2.push_back('9')
-  // vec2.push_back('10')
-  // vec.swap(vec2)
-  // traverseCntr(vec, 'swap two vec')
-  // traverseCntr(vec2, 'swap two vec')
-
-  // vec.clear()
-  // traverseCntr(vec, 'clear')
+  vec.clear()
+  traverseCntr(vec, 'clear')
 
   // vec.emplace<String>(vec.begin(), String, '3')
   // vec.emplace_back<String>(String, '5')
