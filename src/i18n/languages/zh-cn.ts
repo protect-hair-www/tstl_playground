@@ -1,10 +1,10 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-03-22 16:26:13
+ * @LastEditTime: 2022-04-05 19:26:24
  * @LastEditors: hzheyuan
  * @Description: 
- * @FilePath: \tstl_playground\src\i18n\languages\zh-cn.ts
+ * @FilePath: /tstl_playground/src/i18n/languages/zh-cn.ts
  */
 import zhLocale from "element-plus/lib/locale/lang/zh-cn";
 
@@ -48,7 +48,10 @@ export const lang = {
         partition: "Partition",
         binarySearch: "BinarySearch",
         merge: "Merge",
-        sorting: "Sorting"
+        sorting: "Sorting",
+
+        // Exp
+        arrayList: "ArrayList"
     },
     buttons: {
         changeLanguage: "切换语言"

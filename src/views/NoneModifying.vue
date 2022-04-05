@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-23 23:48:01
+ * @LastEditTime: 2022-04-04 10:15:46
  * @LastEditors: hzheyuan
  * @Description: playground for none modifying algorithms
  * @FilePath: /tstl_playground/src/views/NoneModifying.vue
@@ -47,21 +47,33 @@ const testPrimitive = () => {
   vec.push_back('3')
   vec.push_back('4')
   vec.push_back('5')
-  let begin = vec.begin(), end = vec.end();
-  let r = all_of(begin, end, (v) => v < '6')
-  console.log('all of < 6', r)
+  let begin = vec.begin();
+  let end = vec.end();
+  // console.log(begin++)
+  console.log(begin.cur)
+  function test(itr: any) {
+    console.log(begin.cur)
+    begin.next()
+    console.log(begin.cur)
+  }
+  test(begin.cur)
+  console.log(begin.cur)
+  // let x = begin
+  // console.log(x)
+  // let r = all_of(begin, end, (v) => v < '6')
+  // console.log('all of < 6', r)
 
-  r = any_of(begin, end, (v) => v < '6')
-  console.log('any of < 6', r)
+  // r = any_of(begin, end, (v) => v < '6')
+  // console.log('any of < 6', r)
 
-  r = none_of(begin, end, (v) => v < '6')
-  console.log('none of < 6', r)
+  // r = none_of(begin, end, (v) => v < '6')
+  // console.log('none of < 6', r)
 
-  r = find(begin, end, '2');
-  console.log('find if === 2', r)
+  // r = find(begin, end, '2');
+  // console.log('find if === 2', r)
 
-  r = find_if(begin, end, (v) => v > '2');
-  console.log('find if > 2', r)
+  // r = find_if(begin, end, (v) => v > '2');
+  // console.log('find if > 2', r)
 }
 
 const test = () => {
