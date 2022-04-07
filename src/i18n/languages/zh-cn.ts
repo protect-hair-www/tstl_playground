@@ -1,7 +1,7 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-04-05 19:26:24
+ * @LastEditTime: 2022-04-07 21:20:13
  * @LastEditors: hzheyuan
  * @Description: 
  * @FilePath: /tstl_playground/src/i18n/languages/zh-cn.ts
@@ -51,7 +51,8 @@ export const lang = {
         sorting: "Sorting",
 
         // Exp
-        arrayList: "ArrayList"
+        arrayList: "ArrayList",
+        linkedList: "LinkedList"
     },
     buttons: {
         changeLanguage: "切换语言"
