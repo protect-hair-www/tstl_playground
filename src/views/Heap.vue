@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-12 12:10:21
- * @LastEditTime: 2022-03-22 15:09:50
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-09 13:40:24
+ * @LastEditors: kalai
  * @Description: heap
- * @FilePath: \tstl_playground\src\views\Heap.vue
+ * @FilePath: /tstl_playground/src/views/Heap.vue
 -->
 <template>
     <div class="heap-test">
@@ -53,6 +53,7 @@ const onPushHeap = (e: Event) => {
 const onPopHeap = () => {
     let popValue = popHeap(vec.begin(), vec.end())
     vec.pop_back()
+    console.log(vec);
     traverseCntr(vec, `pop heap ${popValue}`);
 }
 
@@ -62,25 +63,29 @@ const onSortHeap = () => {
 } 
 
 const test = () => {
-    vec.push_back(10)
-    vec.push_back(20)
-    vec.push_back(30)
-    vec.push_back(5)
-    vec.push_back(15)
+    // vec.push_back(10)
+    // vec.push_back(20)
+    // vec.push_back(30)
+    // vec.push_back(5)
+    // vec.push_back(15)
+    const arr = [1, 8, 3, 6, 5, 7, 2, 4, 10, 9];
+    for(let n of arr) {
+        vec.push_back(n);
+    }
     traverseCntr(vec, 'vec')
 
     makeHeap(vec.begin(), vec.end())
     traverseCntr(vec, 'make_heap with [10, 20, 30, 5, 15]');
 
-    makeHeap(vec.begin(), vec.end())
+    // makeHeap(vec.begin(), vec.end())
 
-    vec.push_back(100)
-    pushHeap(vec.begin(), vec.end())
-    traverseCntr(vec, 'push heap 100')
+    // vec.push_back(100)
+    // pushHeap(vec.begin(), vec.end())
+    // traverseCntr(vec, 'push heap 100')
 
-    let popValue = popHeap(vec.begin(), vec.end())
-    vec.pop_back() // origin container element shoud remove 
-    traverseCntr(vec, `pop heap ${popValue}`);
+    // let popValue = popHeap(vec.begin(), vec.end())
+    // vec.pop_back() // origin container element shoud remove 
+    // traverseCntr(vec, `pop heap ${popValue}`);
 }
 
 onMounted(test)

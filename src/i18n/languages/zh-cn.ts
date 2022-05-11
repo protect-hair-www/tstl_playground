@@ -1,8 +1,8 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-04-07 21:20:13
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-08 21:11:38
+ * @LastEditors: kalai
  * @Description: 
  * @FilePath: /tstl_playground/src/i18n/languages/zh-cn.ts
  */
@@ -48,11 +48,11 @@ export const lang = {
         partition: "Partition",
         binarySearch: "BinarySearch",
         merge: "Merge",
-        sorting: "Sorting",
+        sorting: "Sorting"
 
         // Exp
-        arrayList: "ArrayList",
-        linkedList: "LinkedList"
+        // arrayList: "ArrayList",
+        // linkedList: "LinkedList"
     },
     buttons: {
         changeLanguage: "切换语言"

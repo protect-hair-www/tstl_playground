@@ -1,8 +1,8 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-04-07 21:22:31
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-08 21:15:45
+ * @LastEditors: kalai
  * @Description: 
  * @FilePath: /tstl_playground/src/App.vue
 -->
@@ -25,8 +25,8 @@
 				<router-link to="/Map">{{ $t("nav.map") }}</router-link>|
 				<router-link to="/MultiSet">{{ $t("nav.multiSet") }}</router-link>|
 				<router-link to="/MultiMap">{{ $t("nav.multiMap") }}</router-link> |
-				<router-link to="/ArrayList">{{ $t("nav.arrayList") }}</router-link> |
-				<router-link to="/LinkedList">{{ $t("nav.linkedList") }}</router-link>
+				<!-- <router-link to="/ArrayList">{{ $t("nav.arrayList") }}</router-link> | -->
+				<!-- <router-link to="/LinkedList">{{ $t("nav.linkedList") }}</router-link> -->
 			</div>
 			<div class="links algorithms">
 				<router-link to="/Algorithms">{{ $t("nav.algorithms") }}</router-link>：
