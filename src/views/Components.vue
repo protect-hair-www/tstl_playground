@@ -1,12 +1,11 @@
 <template>
   <a-layout class="components-container">
     <a-layout-sider collapsible breakpoint="xl">
-      <div class="logo" />
+      <!-- <div class="logo" /> -->
       <a-menu
-        :default-open-keys="['container']"
-        :default-selected-keys="['vector']"
+        :default-open-keys="['container', 'sequences']"
+        :default-selected-keys="['/container/vector']"
         :style="{ width: '100%' }"
-				:auto-open="true"
         @menu-item-click="onClickMenuItem"
       >
         <a-sub-menu key="container">
@@ -101,7 +100,7 @@
           <a-breadcrumb-item>{{subName}}</a-breadcrumb-item>
           <a-breadcrumb-item>{{curName}}</a-breadcrumb-item>
         </a-breadcrumb>
-        <a-layout-content>
+        <a-layout-content class="main-box">
           <router-view></router-view>
 				</a-layout-content>
         <a-layout-footer>Footer</a-layout-footer>
@@ -188,5 +187,10 @@ export default defineComponent({
   font-size: 16px;
   font-stretch: condensed;
   text-align: center;
+}
+
+.components-container .main-box {
+  max-height: 100%;
+  justify-content: flex-start;
 }
 </style>

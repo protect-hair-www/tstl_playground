@@ -1,11 +1,3 @@
-<!--
- * @Author: hzheyuan
- * @Date: 2022-03-18 10:20:04
- * @LastEditTime: 2022-03-22 15:52:45
- * @LastEditors: hzheyuan
- * @Description: 
- * @FilePath: \tstl_playground\src\components\chart.vue
--->
 <template>
     <div id="chart"></div>
 </template>
@@ -13,7 +5,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import { Chart } from './chart'
-import { testAllIterators, traverseCntr } from '../helper'
+import { testAllIterators, traverseCntr } from '@/helper'
 
 let chart:any;
 const props = withDefaults(defineProps<{
@@ -67,7 +59,8 @@ onMounted(() => {
 
 <style lang="css" scoped>
 #chart {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     height: 500px;
 }
 </style>

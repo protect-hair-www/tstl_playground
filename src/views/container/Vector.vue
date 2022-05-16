@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-05-16 17:37:45
+ * @LastEditTime: 2022-05-16 19:28:42
  * @LastEditors: kalai
  * @Description: 
  * @FilePath: \tstl_playground\src\views\container\Vector.vue
@@ -9,19 +9,36 @@
 <template>
   <div class="Vector-test">
     <div class="op">
-      <div>
-        <label for="insert">push_back</label>
-        <input type="number" @keyup.enter="onPushBack" />
-      </div>
+      <a-space>
+        <a-button type="primary">
+          <template #icon>
+            <icon-plus />
+          </template>
+          <template #default>push_back</template>
+        </a-button>
 
-      <div>
-        <button @click="onGetFront">front</button>
-        <button @click="onGetBack">back</button>
-      </div>
+        <a-button type="primary">
+          <template #icon>
+            <icon-plus />
+          </template>
+          <template #default>front</template>
+        </a-button>
 
-      <div>
-        <button @click="onPopBack">pop_back</button>
-      </div>
+        <a-button type="primary">
+          <template #icon>
+            <icon-plus />
+          </template>
+          <template #default>back</template>
+        </a-button>
+
+        <a-button type="primary">
+          <template #icon>
+            <icon-delete />
+          </template>
+          <template #default>pop_back</template>
+        </a-button>
+      </a-space>
+      <AddModal @onSumbit="onPushBack"/>
     </div>
     <Chart type="Vector" :cntr="vecRefs"/>
   </div>
@@ -32,15 +49,16 @@ import { ref, onMounted } from 'vue'
 import { Vector } from 'tstl'
 import { testAllIterators, traverseCntr,  Person} from '@/helper'
 import Chart from '@/components/chart.vue'
+import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon';
+import AddModal from "@/components/addModal.vue";
 
 let vecCntr: Vector<string> = new Vector<string>()
 let vecRefs = ref<Vector<string>>(vecCntr);
 let vec = vecRefs.value;
 
-const onPushBack = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = target.value
-  vec.push_back(v)
+const onPushBack = (e: any) => {
+  console.log(e)
+  // vec.push_back(v)
 }
 
 const onPopBack = () => {
@@ -92,78 +110,6 @@ const testPrimitive = () => {
   vec.push_back('3')
   vec.push_back('4')
   vec.push_back('5')
-
-  console.log('=====Iterator=====')
-  traverseCntr(vec, 'iterator')
-  testAllIterators(vec)
-
-  console.log('=====Capacity=====')
-  console.log('empty', vec.empty())
-  console.log('size', vec.size())
-
-  console.log('=====Element Access=====')
-  console.log('front', vec.front())
-  console.log('back', vec.back())
-
-  console.log('=====Modifiers=====')
-  let itr = vec.begin()
-  itr.next()
-  vec.insert(itr, '5')
-  traverseCntr(vec, 'begin next insert 5')
-
-  vec.insert(vec.end(), '2')
-  traverseCntr(vec, 'insert at en with 2')
-
-  itr = vec.begin()
-  itr.next(); itr.next()
-  vec.insert(itr, 5, '7')
-  traverseCntr(vec, 'insert at begin.next with 5 7')
-
-  itr = vec.begin()
-  itr.next()
-  vec.insert(itr, vec.begin(), vec.end())
-  traverseCntr(vec, 'inset a range of iterator')
-
-  vec.erase(vec.begin())
-  traverseCntr(vec, 'erase begin')
-
-  vec.resize(10, '1')
-  traverseCntr(vec, 'resize of 10 1')
-  vec.resize(15, '1')
-  traverseCntr(vec, 'resize of 15 1')
-
-  vec.resize(5, '5')
-  traverseCntr(vec, 'resize 5 5')
-
-  console.log('=====Operations=====')
-  vec.assign(6, '5')
-  traverseCntr(vec, 'assign 6 5')
-
-  let arr = ['1', '2', '4', '3']
-  vec.assign(arr)
-  traverseCntr(vec, 'assign iterable cntr')
-
-  let vec2 = new Vector<string>();
-  vec2.push_back('3')
-  vec2.push_back('5')
-  vec2.push_back('2')
-  vec.assign(vec2.begin(), vec2.end())
-  traverseCntr(vec, 'assign with iterator')
-
-  vec2.clear()
-  vec2.push_back('8')
-  vec2.push_back('9')
-  vec2.push_back('10')
-  vec.swap(vec2)
-  traverseCntr(vec, 'swap two vec')
-  traverseCntr(vec2, 'swap two vec')
-
-  vec.clear()
-  traverseCntr(vec, 'clear')
-
-  // vec.emplace<String>(vec.begin(), String, '3')
-  // vec.emplace_back<String>(String, '5')
-  // traverseCntr(vec, 'emplace')
 }
 
 const test = () => {
