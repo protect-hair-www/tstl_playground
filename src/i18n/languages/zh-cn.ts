@@ -1,10 +1,10 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-17 17:25:05
- * @LastEditTime: 2022-05-08 21:11:38
+ * @LastEditTime: 2022-05-16 11:25:34
  * @LastEditors: kalai
  * @Description: 
- * @FilePath: /tstl_playground/src/i18n/languages/zh-cn.ts
+ * @FilePath: \tstl_playground\src\i18n\languages\zh-cn.ts
  */
 import zhLocale from "element-plus/lib/locale/lang/zh-cn";
 
@@ -38,6 +38,8 @@ export const lang = {
 
         // rb tree
         tree: 'Tree',
+
+        examples: 'Examples',
 
        
         // Algorithms 

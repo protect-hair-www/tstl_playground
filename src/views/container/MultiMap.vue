@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-22 09:50:15
- * @LastEditTime: 2022-03-22 16:06:27
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:38:35
+ * @LastEditors: kalai
  * @Description: 迭代器测试
- * @FilePath: \tstl_playground\src\views\MultiMap.vue
+ * @FilePath: \tstl_playground\src\views\container\MultiMap.vue
 -->
 <template>
   <div class="Map-test">
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { onMounted, ref } from 'vue'
 import { _RBTree, MultiMap } from 'tstl'
 import { randomNum } from '@/helper';

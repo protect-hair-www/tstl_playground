@@ -1,13 +1,13 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-22 09:50:15
- * @LastEditTime: 2022-03-22 15:44:26
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:38:45
+ * @LastEditors: kalai
  * @Description: 迭代器测试
- * @FilePath: \tstl_playground\src\views\Set.vue
+ * @FilePath: \tstl_playground\src\views\container\Map.vue
 -->
 <template>
-  <div class="Set-test">
+  <div class="Map-test">
     <div class="op">
       <div>
         <label for="insert">insert</label>
@@ -26,60 +26,59 @@
         <input type="text" @keyup.enter="getUpperBound" />
       </div>
     </div>
-    <Chart type="Set" :cntr="setRefs" :opCnt="opCnt"/>
+    <Chart type="Set" :cntr="mapRefs" :opCnt="opCnt"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { onMounted, ref } from 'vue'
-import { _RBTree ,Set } from 'tstl'
+import { _RBTree, Map } from 'tstl'
+import { randomNum } from '@/helper';
 
 const opCnt = ref<number>(0)
-const setCntr = new Set<string>();
-const setRefs = ref<Set<string>>(setCntr)
-const s = setRefs.value;
+const mapCntr = new Map<string, number>();
+const mapRefs = ref<Map<string, number>>(mapCntr)
+const m = mapRefs.value;
 
 const onInsert = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const k = target.value
-  const n = s.insert(k);
+  const n = m.insert(k, randomNum(1, 100));
   opCnt.value++
 }
 
 const onDelete = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
-
-  s.erase(v);
+  m.erase(v);
   opCnt.value++
 }
 
 const getLowerBound = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
-  console.log('lower_bound', s.lower_bound(v).value)
+  console.log('lower_bound', m.lower_bound(v).value)
 }
 
 const getUpperBound = (e: Event) => {
   const target = (<HTMLInputElement>e.target)
   const v = target.value
-  console.log('upper_bound', s.upper_bound(v).value)
+  console.log('upper_bound', m.upper_bound(v).value)
 }
 
 const test = () => {
-  s.insert('a')
-  s.insert('c')
-  s.insert('x')
-  s.insert('y')
-  s.insert('z')
-  s.insert('d')
-  s.insert('b')
-  s.insert('d')
+  m.insert('a', 1)
+  m.insert('b', 5)
+  m.insert('c', 2)
+  m.insert('d', 9)
+  m.insert('x', 3)
+  m.insert('y', 4)
+  m.insert('z', 7)
   opCnt.value++;
 
-  console.log('empty', s.empty())
-  console.log('size', s.size())
+  console.log('empty', m.empty())
+  console.log('size', m.size())
 
   // console.log('find', s.find('cc').key(), s.find('cc').value)
   // console.log('find', s.find('eeee').key())

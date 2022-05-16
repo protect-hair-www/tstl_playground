@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-02-17 15:19:12
- * @LastEditTime: 2022-03-22 15:32:29
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:38:04
+ * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\RBTree.vue
+ * @FilePath: \tstl_playground\src\views\datastructor\RBTree.vue
 -->
 <template>
   <div class="red-black-tree">
@@ -35,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { ref, onMounted, reactive, watch } from 'vue'
 import { _RBTree } from 'tstl'
-import { randomNum, testAllIterators, traverseCntr,  Person} from '../helper'
+import { randomNum, testAllIterators, traverseCntr,  Person} from '@/helper'
 const opCnt = ref<number>(0)
 const rbtreeCntr = new _RBTree<number, string>();
 const trRefs = ref<_RBTree<number, string>>(rbtreeCntr)

@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-23 19:03:02
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:38:58
+ * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\List.vue
+ * @FilePath: \tstl_playground\src\views\container\List.vue
 -->
 <template>
   <div class="List-test">
@@ -34,10 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
 import { ref, onMounted } from 'vue'
 import { List } from 'tstl'
-import { testAllIterators, traverseCntr } from '../helper'
+import { testAllIterators, traverseCntr } from '@/helper'
+import Chart from '@/components/chart.vue'
 const listCntr: List<string> = new List<string>();
 const listRefs = ref<List<string>>(listCntr);
 let list = listRefs.value;

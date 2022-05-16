@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-12 12:10:21
- * @LastEditTime: 2022-03-22 15:18:32
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:40:01
+ * @LastEditors: kalai
  * @Description: priority queue
- * @FilePath: \tstl_playground\src\views\PriorityQueue.vue
+ * @FilePath: \tstl_playground\src\views\adapter\PriorityQueue.vue
 -->
 <template>
     <div class="priorityqueue-test">
@@ -23,10 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { ref, onMounted, queuePostFlushCb } from 'vue'
 import { Vector, PriorityQueue, less, greater } from 'tstl'
-import { testAllIterators, traverseCntr } from '../helper'
+import { testAllIterators, traverseCntr } from '@/helper'
 
 let pqCntr = new PriorityQueue<number>(Vector, less, true);
 let pqRefs = ref<PriorityQueue<number>>(pqCntr);

@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-22 15:01:18
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:37:12
+ * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Stack.vue
+ * @FilePath: \tstl_playground\src\views\adapter\Stack.vue
 -->
 <template>
   <div class="stack-test">
@@ -23,10 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { ref, onMounted } from 'vue'
 import { Stack } from 'tstl'
-import { testAllIterators, traverseCntr } from '../helper'
+import { testAllIterators, traverseCntr } from '@/helper'
 
 let sCntr: Stack<string> = new Stack<string>()
 let sRefs = ref<Stack<string>>(sCntr);

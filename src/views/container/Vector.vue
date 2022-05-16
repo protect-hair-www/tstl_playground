@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-23 13:23:13
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:37:45
+ * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Vector.vue
+ * @FilePath: \tstl_playground\src\views\container\Vector.vue
 -->
 <template>
   <div class="Vector-test">
@@ -30,8 +30,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { Vector } from 'tstl'
-import { testAllIterators, traverseCntr,  Person} from '../helper'
-import Chart from '../components/chart.vue'
+import { testAllIterators, traverseCntr,  Person} from '@/helper'
+import Chart from '@/components/chart.vue'
 
 let vecCntr: Vector<string> = new Vector<string>()
 let vecRefs = ref<Vector<string>>(vecCntr);

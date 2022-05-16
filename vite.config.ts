@@ -3,6 +3,9 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from "path"
 import { changePackageVersion } from "./scripts/plugins"
 import { readdirSync } from 'fs';
+import { createStyleImportPlugin, VantResolve } from 'vite-plugin-style-import'
+import Components from 'unplugin-vue-components/vite'
+import { ArcoResolver } from 'unplugin-vue-components/resolvers';
 
 /**
  * 获取多入口文件
@@ -22,7 +25,6 @@ export function getPages() {
   return pages;
 }
 
-// https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
   resolve: {
@@ -37,6 +39,14 @@ export default defineConfig({
     changePackageVersion(),
     vue({
       refTransform: [/src/]
+    }),
+    createStyleImportPlugin({
+      resolves: [VantResolve()]
+    }),
+    Components({
+      resolvers: [
+        ArcoResolver()
+      ]
     })
   ],
   build: {

@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { onMounted, ref } from 'vue'
 import { _RBTree, MultiSet } from 'tstl'
 

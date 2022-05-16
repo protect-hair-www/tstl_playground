@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-22 14:34:49
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:39:07
+ * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Deque.vue
+ * @FilePath: \tstl_playground\src\views\container\Deque.vue
 -->
 <template>
   <div class="Deque-test">
@@ -34,10 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { ref, onMounted } from 'vue'
 import { Deque } from 'tstl'
-import { testAllIterators, traverseCntr } from '../helper'
+import { testAllIterators, traverseCntr } from '@/helper'
 
 const deqCntr: Deque<string> = new Deque<string>()
 const deqRefs = ref<Deque<string>>(deqCntr);

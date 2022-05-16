@@ -1,10 +1,10 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-03-22 14:39:32
- * @LastEditors: hzheyuan
+ * @LastEditTime: 2022-05-16 17:36:55
+ * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\Queue.vue
+ * @FilePath: \tstl_playground\src\views\adapter\Queue.vue
 -->
 <template>
   <div class="queue-test">
@@ -24,9 +24,9 @@
 </template>
 
 <script setup lang="ts">
-import Chart from '../components/chart.vue'
+import Chart from '@/components/chart.vue'
 import { ref, onMounted } from 'vue'
-import { testAllIterators, traverseCntr } from '../helper'
+import { testAllIterators, traverseCntr } from '@/helper'
 import { Queue } from 'tstl'
 
 let qCntr: Queue<string> = new Queue<string>()
