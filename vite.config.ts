@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ArcoResolver } from 'unplugin-vue-components/resolvers';
 
 /**
- * 获取多入口文件
+ * 解析多页面入口
  * @returns 
  */
 export function getPages() {

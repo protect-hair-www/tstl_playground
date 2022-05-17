@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     ABreadcrumb: typeof import('@arco-design/web-vue')['Breadcrumb']
     ABreadcrumbItem: typeof import('@arco-design/web-vue')['BreadcrumbItem']
     AButton: typeof import('@arco-design/web-vue')['Button']
+    AccessBtn: typeof import('./src/components/AccessBtn.vue')['default']
     AddModal: typeof import('./src/components/addModal.vue')['default']
     AForm: typeof import('@arco-design/web-vue')['Form']
     AFormItem: typeof import('@arco-design/web-vue')['FormItem']
@@ -27,6 +28,9 @@ declare module '@vue/runtime-core' {
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']
     Chart: typeof import('./src/components/chart.vue')['default']
     Editor: typeof import('./src/components/editor.vue')['default']
+    InsertModal: typeof import('./src/components/InsertModal.vue')['default']
+    PushModal: typeof import('./src/components/PushModal.vue')['default']
+    'PushModal copy': typeof import('./src/components/PushModal copy.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

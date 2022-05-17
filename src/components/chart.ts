@@ -1,7 +1,7 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-03 14:42:44
- * @LastEditTime: 2022-05-16 10:28:04
+ * @LastEditTime: 2022-05-17 17:25:13
  * @LastEditors: kalai
  * @Description: 绘制数据结构，方便测试
  * @FilePath: \tstl_playground\src\components\chart.ts
@@ -268,6 +268,9 @@ export class Chart {
         let { data, indexs } = this.getVectorData(vec);
         let option = {
             xAxis: {
+                axisTick: {
+                    show: false
+                },
                 data: indexs
             },
             grid: {
@@ -280,6 +283,7 @@ export class Chart {
                 name: "Vector",
                 type: "bar",
                 barCategoryGap: '0%',
+                // barWidth: '30',
                 data: data,
             }]
         };
