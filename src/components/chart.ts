@@ -1,13 +1,14 @@
 /*
  * @Author: hzheyuan
  * @Date: 2022-03-03 14:42:44
- * @LastEditTime: 2022-05-17 17:25:13
+ * @LastEditTime: 2022-05-18 10:17:13
  * @LastEditors: kalai
  * @Description: 绘制数据结构，方便测试
  * @FilePath: \tstl_playground\src\components\chart.ts
  */
 import * as echarts from 'echarts';
 import { Vector } from 'tstl'
+
 export class Chart {
     chart: any
 
@@ -274,6 +275,7 @@ export class Chart {
                 data: indexs
             },
             grid: {
+                left: '0',
                 height: '12%',
             },
             yAxis: {

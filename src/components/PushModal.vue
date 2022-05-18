@@ -5,11 +5,11 @@
  * @FilePath: \tstl_playground\src\components\PushModal.vue
 -->
 <template>
-  <a-button type="primary" @click="handleClick">
-    <template #icon>
+  <a-button type="secondary" @click="handleClick">
+    <!-- <template #icon>
       <icon-plus />
-    </template>
-    <template #default>push_back</template>
+    </template> -->
+    <template #default>{{text}}</template>
   </a-button>
 
   <a-modal v-model:visible="visible" title="新增元素" @cancel="handleCancel" @ok="handleSubmit">
@@ -21,41 +21,32 @@
   </a-modal>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { reactive, ref, defineEmits, defineComponent } from 'vue';
 import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon';
 const emit = defineEmits<{ (e: 'submit', ele: number): void }>();
 
-export default defineComponent({
-  components: {
-    IconPlus
-  },
+const props = defineProps<{
+  text?: string
+  icon?: string 
+}>()
 
-  setup(props: any, context: any) {
-    const visible = ref(false);
-    const form = reactive({
-      val: '',
-    });
+const { text = 'push_back', icon = 'Access'} = props;
 
-    const handleClick = () => {
-      visible.value = true;
-    };
+const visible = ref(false);
+const form = reactive({
+  val: '',
+});
 
-    const handleCancel = () => {
-      visible.value = false;
-    }
+const handleClick = () => {
+  visible.value = true;
+};
 
-    const handleSubmit = () => {
-      context.emit('submit', Number(form.val));
-    }
+const handleCancel = () => {
+  visible.value = false;
+}
 
-    return {
-      visible,
-      form,
-      handleClick,
-      handleSubmit,
-      handleCancel
-    }
-  }
-})
+const handleSubmit = () => {
+  emit('submit', Number(form.val));
+}
 </script>

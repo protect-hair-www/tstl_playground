@@ -186,7 +186,7 @@ export default defineComponent({
   color: var(--color-white);
   font-size: 16px;
   font-stretch: condensed;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .components-container .main-box {

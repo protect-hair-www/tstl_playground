@@ -9,11 +9,11 @@
 
   <a-modal v-model:visible="visible" :title="title" @cancel="handleCancel" @ok="handleSubmit">
     <a-form :model="form">
-      <a-form-item field="pos" label="位置">
-        <a-input v-model="form.pos" type="number" placeholder="插入元素位置" />
+      <a-form-item field="pos" label="起始位置">
+        <a-input v-model="form.begin" type="number" placeholder="删除元素起始位置" />
       </a-form-item>
-      <a-form-item field="val" label="值">
-        <a-input v-model="form.val" type="number" placeholder="输入新增元素" />
+      <a-form-item field="val" label="结束位置">
+        <a-input v-model="form.end" type="number" placeholder="删除元素结束位置，不填只删除起始位置元素" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -33,8 +33,8 @@ const props = defineProps<Props>()
 // const { title, icon } = toRefs(props);
 const visible = ref(false);
 const form = reactive({
-  pos: '',
-  val: '',
+  begin: '',
+  end: '',
 });
 
 const handleClick = () => {

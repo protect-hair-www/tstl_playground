@@ -25,7 +25,6 @@ const router = createRouter({
 
 export default router;
 
-/** 以下代码不要修改 */
 function loadRouters() {
 
 	const routes: RouteRecordRaw[] = [];
@@ -47,6 +46,7 @@ function loadRouters() {
 			component: () => import(`../views/${name}.vue`)
 		})
 	});
+
 	// console.log(children)
 	routes.push({ path: '/components', component: Components, children: children})
 

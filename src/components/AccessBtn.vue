@@ -1,9 +1,9 @@
 <template>
-  <a-button type="primary" @click="handleClick">
+  <a-button type="secondary" @click="handleClick">
     <template #icon>
-      <icon-plus v-if="icon === 'Plus'" />
+      <!-- <icon-plus v-if="icon === 'Plus'" />
       <icon-minus v-if="icon === 'Minus'" />
-      <icon-share-external v-if="icon === 'Access'" />
+      <icon-share-external v-if="icon === 'Access'" /> -->
     </template>
     <template #default>{{text}}</template>
   </a-button>
