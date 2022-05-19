@@ -1,83 +1,83 @@
-<!--
- * @Author: hzheyuan
- * @Date: 2022-02-17 15:19:12
- * @LastEditTime: 2022-05-16 17:38:04
- * @LastEditors: kalai
- * @Description: 
- * @FilePath: \tstl_playground\src\views\datastructor\RBTree.vue
--->
 <template>
-  <div class="red-black-tree">
-    <div class="op">
-      <div>
-        <label for="insert">insert</label>
-        <input type="number" @keyup.enter="onInsert" />
-      </div>
-      <div>
-        <label for="insert">insert_unique</label>
-        <input type="number" @keyup.enter="onInsertUnique" />
-      </div>
-      <div>
-        <label for="delete">delete</label>
-        <input type="number" @keyup.enter="onDelete" />
-      </div>
-      <div>
-        <label for="rotate">rotateLeft</label>
-        <input type="number" @keyup.enter="onRotateLeft" />
-      </div>
-      <div>
-        <label for="rotate">rotateRight</label>
-        <input type="number" @keyup.enter="onRotateRight" />
-      </div>
-    </div>
-    <Chart type="RBTree" :cntr="trRefs" :opCnt="opCnt"/>
-  </div>
+  <Space class="content rbtree" size="large" direction='vertical'>
+    <Space class="modifiers" size='middle' direction='vertical'>
+
+      <!-- Capacity -->
+      <Space align="start">
+        <!-- <Divider>loading fixed width</Divider> -->
+        <AccessBtn @click="() => onCapacity('size')" text="size" />
+        <AccessBtn @click="() => onCapacity('empty')" text="empty" />
+      </Space>
+
+      <!-- Element access -->
+      <Space>
+        <EraseModal @submit="onFind" title="查找" type="val" label2="查找" placeholder2="输入要查找元素的key" text="find" />
+        <InsertModal @submit="onGetLowerBound" type="val" title="查询" text="lower_bound" />
+        <InsertModal @submit="onGetUpperBound" type="val" title="查询" text="upper_bound" />
+      </Space>
+
+      <!-- Modifiers -->
+      <Space>
+        <InsertModal @submit="onInsert" title="插入" type="val" text="insert" />
+        <InsertModal @submit="onInsertUnique" title="插入(保持唯一)" type="val" text="insert_unique" />
+        <EraseModal @submit="onErase" title="删除" type="val" label2="删除" placeholder2="输入要删除元素的key" text="erase"/>
+      </Space>
+    </Space>
+    <TreeChart :size="opCnt" :cntr="state.cntr"></TreeChart>
+  </Space>
 </template>
 
 <script setup lang="ts">
-import Chart from '@/components/chart.vue'
-import { ref, onMounted, reactive, watch } from 'vue'
-import { _RBTree } from 'tstl'
+import { ref, onMounted, reactive, watch, computed } from 'vue'
+import { _RBTree, List, advance, distance, reverse } from 'tstl'
+import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon'
+import { Notification, Divider, Space } from '@arco-design/web-vue'
 import { randomNum, testAllIterators, traverseCntr,  Person} from '@/helper'
+import TreeChart from "@/components/charts/TreeLike.vue"
+
 const opCnt = ref<number>(0)
-const rbtreeCntr = new _RBTree<number, string>();
-const trRefs = ref<_RBTree<number, string>>(rbtreeCntr)
-const tr = trRefs.value;
+const cntr = new _RBTree<number, number>();
+const state = reactive({cntr})
 
-const onInsert = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const k = Number(target.value)
-  const n = tr.insert_equal(k, k.toString());
+const onInsert = (form) => {
+  const k = Number(form.val)
+  const n = state.cntr.insert_equal(k, k);
   opCnt.value++
 }
 
-const onInsertUnique = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const k = Number(target.value)
-  const n = tr.insert_unique(k, k.toString());
+const onInsertUnique = (form) => {
+  const k = Number(form.val)
+  const n = state.cntr.insert_unique(k, k);
   opCnt.value++
 }
 
-const onDelete = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = Number(target.value)
-  tr.erase(v);
+const onErase = (form) => {
+  const key = Number(form.end)
+  state.cntr.erase(key);
   opCnt.value++
 }
 
-const onRotateLeft = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = Number(target.value)
-  const n = tr.find(v).getNode();
-  tr.leftRotate(n);
+const onFind = () => {
+
+}
+
+const onGetUpperBound = (val) => {
+}
+
+const onGetLowerBound = (val) => {
+}
+
+const onRotateLeft = (val) => {
+  const v = Number(val)
+  const n = state.cntr.find(v).getNode();
+  state.cntr.leftRotate(n);
   opCnt.value++
 }
 
-const onRotateRight = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = Number(target.value)
-  const n = tr.find(v).getNode();
-  tr.rightRotate(n);
+const onRotateRight = (val) => {
+  const v = Number(val)
+  const n = state.cntr.find(v).getNode();
+  state.cntr.rightRotate(n);
   opCnt.value++
 }
 
@@ -91,51 +91,38 @@ const getRanddomTestData = (num: number) => {
   return Array.from(test);
 }
 
+const getResultOf = (type: string) => {
+  if (type === 'size') return state.cntr.size
+  if (type === 'empty') return `${state.cntr.empty}`
+}
+
+const onCapacity = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Capacity of the container`,
+    content: `The Result is ${res}`
+  })
+}
+
+const onAccess = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Access element of ${type}`,
+    content: `The Result is ${res}`
+  })
+}
+
 const test = () => {
   // const array = getRanddomTestData(100)
   const array = [11, 2, 14, 1, 7, 15, 5, 8, 4, 9, 12, 17, 10, 20, 22]
-  console.log(tr)
-  // const array = []
   array.forEach((key: number) => {
-    tr.insert_unique(key, `${key}`)
-    // console.log('verify', tr._verify())
+    state.cntr.insert_unique(key, key)
   });
-  console.log('verify', tr._verify())
+  // console.log('verify', state.cntr._verify())
   opCnt.value++
-
   // this.tr.inorderWalk(node => console.log(node.key), 14);
-  console.log('tree instance: ', tr)
-  console.log('size', tr.size);
-  console.log('empty', tr.empty);
-  console.log('lower_bound', tr.lower_bound(3).value)
-  console.log('upper_bound', tr.upper_bound(5).value)
-
-  // begin迭代器
-  // let beginItr = tr.begin();
-  // console.log('begin iterator', beginItr.value);
-  // let bstr = ''
-  // for (let item of beginItr) {
-  //   bstr += ` ${item}`
-  // }
-  // console.log('begin loop', bstr)
-
-  // entries
-  // let entriesItr = tr.begin();
-  // for(let e of entriesItr.entries()) {
-  //   console.log(e)
-  // }
-  // // keys
-  // let keysItr = tr.begin();
-  // for(let k of keysItr.keys()) {
-  //   console.log(k)
-  // }
-  // // values
-  // let valuesItr = tr.begin();
-  // for(let k of valuesItr.values()) {
-  //   console.log(k)
-  // }
-  // testAllIterators(tr.begin())
 }
+
 onMounted(test)
 
 </script>

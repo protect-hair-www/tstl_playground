@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     AForm: typeof import('@arco-design/web-vue')['Form']
     AFormItem: typeof import('@arco-design/web-vue')['FormItem']
     AInput: typeof import('@arco-design/web-vue')['Input']
+    AInputGroup: typeof import('@arco-design/web-vue')['InputGroup']
     ALayout: typeof import('@arco-design/web-vue')['Layout']
     ALayoutContent: typeof import('@arco-design/web-vue')['LayoutContent']
     ALayoutFooter: typeof import('@arco-design/web-vue')['LayoutFooter']
@@ -39,6 +40,7 @@ declare module '@vue/runtime-core' {
     'PushModal copy': typeof import('./src/components/PushModal copy.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TreeLike: typeof import('./src/components/charts/TreeLike.vue')['default']
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <a-button type="secondary" @click="handleClick">
+  <a-button type="secondary">
     <template #icon>
       <!-- <icon-plus v-if="icon === 'Plus'" />
       <icon-minus v-if="icon === 'Minus'" />

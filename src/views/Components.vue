@@ -2,35 +2,34 @@
   <a-layout class="components-container">
     <a-layout-sider collapsible breakpoint="xl">
       <!-- <div class="logo" /> -->
-      <a-menu
-        :default-open-keys="['container', 'sequences']"
-        :default-selected-keys="['/container/vector']"
-        :style="{ width: '100%' }"
-        @menu-item-click="onClickMenuItem"
-      >
+      <a-menu :default-open-keys="['container', 'sequences']" :default-selected-keys="['/container/vector']"
+        :style="{ width: '100%' }" @menu-item-click="onClickMenuItem">
         <a-sub-menu key="container">
           <template #title>
             <IconCalendar></IconCalendar>容器
           </template>
           <a-sub-menu key="sequences" title="序列式容器">
             <a-menu-item key="/container/vector">Vector</a-menu-item>
-            <a-menu-item key="/container/list">List</a-menu-item>
+            <a-menu-item key="/container/list">LikedList</a-menu-item>
             <a-menu-item key="/container/deque">Deque</a-menu-item>
             <a-menu-item key="/container/slist">Slist</a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="associative" title="关联式容器">
-            <a-menu-item key="/container/set">Set</a-menu-item>
-            <a-menu-item key="/container/map">Map</a-menu-item>
+            <a-menu-item key="/container/set">TreeSet</a-menu-item>
+            <a-menu-item key="/container/map">TreeMap</a-menu-item>
             <a-menu-item key="/container/multiset">multiSet</a-menu-item>
             <a-menu-item key="/container/multimap">multiMap</a-menu-item>
             <a-menu-item key="/container/hashset">hashSet</a-menu-item>
             <a-menu-item key="/container/hashmap">hashMap</a-menu-item>
           </a-sub-menu>
+          <a-sub-menu key="datastructor" title="树">
+            <a-menu-item key="/datastructor/RBTree">RedBlackTree</a-menu-item>
+          </a-sub-menu>
         </a-sub-menu>
 
         <a-sub-menu key="adapter">
           <template #title>
-            <IconCalendar></IconCalendar>适配器 
+            <IconCalendar></IconCalendar>适配器
           </template>
           <a-menu-item key="/adapter/queue">queue</a-menu-item>
           <a-menu-item key="/adapter/priorityQueue">priorityQueue</a-menu-item>
@@ -91,18 +90,18 @@
         <IconCaretRight v-if="collapsed"></IconCaretRight>
         <IconCaretLeft v-else></IconCaretLeft>
       </template>
-
     </a-layout-sider>
+
     <a-layout>
       <a-layout style="padding: 0 24px;">
         <a-breadcrumb :style="{ margin: '16px 0' }">
           <a-breadcrumb-item>Components</a-breadcrumb-item>
-          <a-breadcrumb-item>{{subName}}</a-breadcrumb-item>
-          <a-breadcrumb-item>{{curName}}</a-breadcrumb-item>
+          <a-breadcrumb-item>{{ subName }}</a-breadcrumb-item>
+          <a-breadcrumb-item>{{ curName }}</a-breadcrumb-item>
         </a-breadcrumb>
         <a-layout-content class="main-box">
           <router-view></router-view>
-				</a-layout-content>
+        </a-layout-content>
         <a-layout-footer>Footer</a-layout-footer>
       </a-layout>
     </a-layout>
@@ -111,7 +110,7 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { Message} from '@arco-design/web-vue';
+import { Message } from '@arco-design/web-vue';
 import {
   IconCaretRight,
   IconCaretLeft,
@@ -128,7 +127,7 @@ export default defineComponent({
   },
   methods: {
     onClickMenuItem(key) {
-      this.$router.push({path: key})
+      this.$router.push({ path: key })
       // Message.info({ content: `You select ${key}`, showIcon: true });
     }
   },
@@ -152,19 +151,23 @@ export default defineComponent({
   background: var(--color-fill-2);
   border: 1px solid var(--color-border);
 }
+
 .components-container :deep(.arco-layout-sider) .logo {
   height: 32px;
   margin: 12px 8px;
   background: rgba(255, 255, 255, 0.2);
 }
-.components-container :deep(.arco-layout-sider-light) .logo{
+
+.components-container :deep(.arco-layout-sider-light) .logo {
   background: var(--color-fill-2);
 }
-.components-container :deep(.arco-layout-header)  {
+
+.components-container :deep(.arco-layout-header) {
   height: 64px;
   line-height: 64px;
   background: var(--color-bg-3);
 }
+
 .components-container :deep(.arco-layout-footer) {
   height: 48px;
   color: var(--color-text-2);
@@ -172,14 +175,16 @@ export default defineComponent({
   font-size: 14px;
   line-height: 48px;
 }
+
 .components-container :deep(.arco-layout-content) {
   color: var(--color-text-2);
   font-weight: 400;
   font-size: 14px;
   background: var(--color-bg-3);
 }
+
 .components-container :deep(.arco-layout-footer),
-.components-container :deep(.arco-layout-content)  {
+.components-container :deep(.arco-layout-content) {
   display: flex;
   flex-direction: column;
   justify-content: center;

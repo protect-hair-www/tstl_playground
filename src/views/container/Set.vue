@@ -1,119 +1,107 @@
-<!--
- * @Author: hzheyuan
- * @Date: 2022-02-22 09:50:15
- * @LastEditTime: 2022-05-16 17:38:22
- * @LastEditors: kalai
- * @Description: 迭代器测试
- * @FilePath: \tstl_playground\src\views\container\Set.vue
--->
 <template>
-  <div class="Set-test">
-    <div class="op">
-      <div>
-        <label for="insert">insert</label>
-        <input type="text" @keyup.enter="onInsert" />
-      </div>
-      <div>
-        <label for="delete">delete</label>
-        <input type="text" @keyup.enter="onDelete" />
-      </div>
-      <div>
-        <label for="delete">lower_bound</label>
-        <input type="text" @keyup.enter="getLowerBound" />
-      </div>
-      <div>
-        <label for="delete">upper_bound</label>
-        <input type="text" @keyup.enter="getUpperBound" />
-      </div>
-    </div>
-    <Chart type="Set" :cntr="setRefs" :opCnt="opCnt"/>
-  </div>
+  <Space class="content rbtree" size="large" direction='vertical'>
+    <Space class="modifiers" size='middle' direction='vertical'>
+
+      <!-- Capacity -->
+      <Space align="start">
+        <!-- <Divider>loading fixed width</Divider> -->
+        <AccessBtn @click="() => onCapacity('size')" text="size" />
+        <AccessBtn @click="() => onCapacity('empty')" text="empty" />
+      </Space>
+
+      <!-- Element access -->
+      <Space>
+        <EraseModal @submit="onFind" title="查找" type="val" label2="查找" placeholder2="输入要查找元素的key" text="find" />
+        <InsertModal @submit="onGetLowerBound" type="val" title="查询" text="lower_bound" />
+        <InsertModal @submit="onGetUpperBound" type="val" title="查询" text="upper_bound" />
+      </Space>
+
+      <!-- Modifiers -->
+      <Space>
+        <InsertModal @submit="onInsert" title="插入" type="val" text="insert" />
+        <EraseModal @submit="onErase" title="删除" type="val" label2="删除" placeholder2="输入要删除元素的key" text="erase"/>
+      </Space>
+    </Space>
+    <TreeChart :size="opCnt" :cntr="state.cntr._t"></TreeChart>
+  </Space>
 </template>
 
 <script setup lang="ts">
-import Chart from '@/components/chart.vue'
-import { onMounted, ref } from 'vue'
-import { _RBTree ,Set } from 'tstl'
+import { ref, onMounted, reactive, watch, computed } from 'vue'
+import { Set, List, advance, distance, reverse } from 'tstl'
+import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon'
+import { Notification, Divider, Space } from '@arco-design/web-vue'
+import { randomNum, testAllIterators, traverseCntr,  Person} from '@/helper'
+import TreeChart from "@/components/charts/TreeLike.vue"
 
 const opCnt = ref<number>(0)
-const setCntr = new Set<string>();
-const setRefs = ref<Set<string>>(setCntr)
-const s = setRefs.value;
+const cntr = new Set<number, number>()
+const state = reactive({cntr})
 
-const onInsert = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const k = target.value
-  const n = s.insert(k);
+const onInsert = (form) => {
+  const k = Number(form.val)
+  const n = state.cntr.insert(k);
   opCnt.value++
 }
 
-const onDelete = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = target.value
-
-  s.erase(v);
+const onErase = (form) => {
+  const key = Number(form.end)
+  state.cntr.erase(key);
   opCnt.value++
 }
 
-const getLowerBound = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = target.value
-  console.log('lower_bound', s.lower_bound(v).value)
+const onFind = () => {
+
 }
 
-const getUpperBound = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = target.value
-  console.log('upper_bound', s.upper_bound(v).value)
+const onGetUpperBound = (val) => {
+
+}
+
+const onGetLowerBound = (val) => {
+
+}
+
+const getRanddomTestData = (num: number) => {
+  let c = num;
+  const test = new Set();
+  while (c >= 0) {
+    test.add(randomNum(1, 1001));
+    --c;
+  }
+  return Array.from(test);
+}
+
+const getResultOf = (type: string) => {
+  if (type === 'size') return state.cntr.size
+  if (type === 'empty') return `${state.cntr.empty}`
+}
+
+const onCapacity = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Capacity of the container`,
+    content: `The Result is ${res}`
+  })
+}
+
+const onAccess = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Access element of ${type}`,
+    content: `The Result is ${res}`
+  })
 }
 
 const test = () => {
-  s.insert('a')
-  s.insert('c')
-  s.insert('x')
-  s.insert('y')
-  s.insert('z')
-  s.insert('d')
-  s.insert('b')
-  s.insert('d')
-  opCnt.value++;
-
-  console.log('empty', s.empty())
-  console.log('size', s.size())
-
-  // console.log('find', s.find('cc').key(), s.find('cc').value)
-  // console.log('find', s.find('eeee').key())
-
-  // console.log('count', s.count('cc'))
-  // console.log('count', s.count('xx'))
-
-  // console.log('lower_bound', s.lower_bound('xx').value)
-  // console.log('upper_bound', s.upper_bound('xx').value)
-  // console.log('equal_range', s.equal_range('yy'))
-
-  // // 删除
-  // console.log('erase', s.erase('cc'))
-  // console.log('erase', s.erase('kkkk'))
-
-  // console.log('===keys====')
-  // let keys = s.begin().keys();
-  // for(let k of keys) {
-  //   console.log(k)
-  // }
-
-  // console.log('===values====')
-  // let values = s.begin().values();
-  // for (let item of values) {
-  //   console.log(item)
-  // }
-
-  // console.log('===entries====')
-  // let entries = s.begin().entries();
-  // for (let item of entries) {
-  //   console.log(item)
-  // }
-
+  // const array = getRanddomTestData(100)
+  const array = [11, 2, 14, 1, 7, 15, 5, 8, 4, 9, 12, 17, 10, 20, 22]
+  array.forEach((key: number) => {
+    state.cntr.insert(key, key)
+  });
+  opCnt.value++
 }
+
 onMounted(test)
 
 </script>

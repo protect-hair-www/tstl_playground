@@ -1,7 +1,7 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-05-18 17:32:57
+ * @LastEditTime: 2022-05-19 14:24:52
  * @LastEditors: kalai
  * @Description: 
  * @FilePath: \tstl_playground\src\views\container\List.vue
@@ -31,6 +31,9 @@
         <PushModal @submit="onPushFront" text="push_front" icon="Plus" />
         <InsertModal @submit="onInsert" title="插入" text="insert" icon="Plus" />
         <EraseModal @submit="onErase" title="删除" text="erase" icon="Minus" />
+        <InsertModal @submit="onSplice" title="splice" text="splice" icon="Plus" />
+        <EraseModal @submit="onResize" title="resize" text="resize" icon="Minus" />
+        <AccessBtn @click="onReverse" text="reverse" icon="Minus" />
         <AccessBtn @click="onReset" text="reset" icon="Minus" />
         <AccessBtn @click="onSort" text="sort" icon="Minus" />
       </Space>
@@ -43,7 +46,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { List, advance, distance } from 'tstl'
+import { List, advance, distance, reverse } from 'tstl'
 import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon';
 import { Notification, Divider, Space } from '@arco-design/web-vue';
 import LinkList from "@/components/charts/LinkList.vue";
@@ -116,6 +119,35 @@ const onErase = (v: { begin: number, end: number }) => {
     list.erase(begin)
   }
 }
+
+const onSplice = (v: { begin: number, end: number }) => {
+  const first = Number(v.begin)
+  const last = Number(v.end)
+
+  const begin = list.begin()
+  const end = list.begin()
+
+  advance(begin, first)
+  advance(end, last)
+
+  list.splice(list.begin(), list, begin, end)
+}
+
+const onReverse = () => {
+  list.reverse()
+}
+
+const onResize = (v: { begin: number, end: number }) => {
+  const n = Number(v.begin)
+  const val = v.end 
+  if(val) {
+    list.resize(n, val)
+  } else {
+    list.resize(n, 0)
+  }
+  console.log(list)
+}
+
 
 const onSort = () => {
   sort(list.begin(), list.end());

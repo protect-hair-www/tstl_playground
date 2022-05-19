@@ -1,43 +1,53 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-05-16 17:38:58
+ * @LastEditTime: 2022-05-19 15:33:23
  * @LastEditors: kalai
  * @Description: 
- * @FilePath: \tstl_playground\src\views\container\List.vue
+ * @FilePath: \tstl_playground\src\views\container\Slist.vue
 -->
 <template>
-  <div class="List-test">
-    <div class="op">
-      <div>
-        <label for="insert">push_back</label>
-        <input type="number" @keyup.enter="onPushBack" />
-      </div>
+  <Space class="content deque" size="large" direction='vertical'>
 
-      <div>
-        <label for="insert">push_front</label>
-        <input type="number" @keyup.enter="onPushFront" />
-      </div>
+    <Space class="modifiers" size='middle' direction='vertical'>
+      <!-- Capacity -->
+      <Space align="start">
+        <!-- <Divider>loading fixed width</Divider> -->
+        <AccessBtn @click="() => onCapacity('size')" text="size" />
+        <AccessBtn @click="() => onCapacity('empty')" text="empty" />
+      </Space>
 
-      <div>
-        <button @click="onGetFront">front</button>
-        <button @click="onGetBack">back</button>
-      </div>
+      <!-- Element access -->
+      <Space>
+        <!-- <Divider>loading fixed width</Divider> -->
+        <AccessBtn @click="() => onAccess('front')" text="front" />
+        <AccessBtn @click="() => onAccess('back')" text="back" />
+        <AccessBtn @click="onPopBack" text="pop_back" icon="Minus" />
+      </Space>
 
-      <div>
-        <button @click="onPopFront">pop_front</button>
-        <button @click="onPopBack">pop_back</button>
-      </div>
-    </div>
-    <Chart type="List" :cntr="listRefs"/>
-  </div>
+      <!-- Modifiers -->
+      <Space>
+        <PushModal @submit="onPushBack" text="push_back" icon="Plus" />
+        <InsertModal @submit="onInsert" title="插入" text="insert" icon="Plus" />
+        <EraseModal @submit="onErase" title="删除" text="erase" icon="Minus" />
+        <AccessBtn @click="onReset" text="reset" icon="Minus" />
+        <AccessBtn @click="onSort" text="sort" icon="Minus" />
+      </Space>
+
+    </Space>
+    <LinkList :cntr="listRefs"></LinkList>
+  </Space>
 </template>
+
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { List } from 'tstl'
+import { List, advance, distance, reverse } from 'tstl'
+import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon';
+import { Notification, Divider, Space } from '@arco-design/web-vue';
+import LinkList from "@/components/charts/LinkList.vue";
 import { testAllIterators, traverseCntr } from '@/helper'
-import Chart from '@/components/chart.vue'
+
 const listCntr: List<string> = new List<string>();
 const listRefs = ref<List<string>>(listCntr);
 let list = listRefs.value;

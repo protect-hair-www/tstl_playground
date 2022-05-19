@@ -9,11 +9,11 @@
 
   <a-modal v-model:visible="visible" :title="title" @cancel="handleCancel" @ok="handleSubmit">
     <a-form :model="form">
-      <a-form-item field="pos" label="起始位置">
-        <a-input v-model="form.begin" type="number" placeholder="删除元素起始位置" />
+      <a-form-item v-if="type !== 'val'" field="pos" :label="label1">
+        <a-input v-model="form.begin" type="number" :placeholder="placeholder1" />
       </a-form-item>
-      <a-form-item field="val" label="结束位置">
-        <a-input v-model="form.end" type="number" placeholder="删除元素结束位置，不填只删除起始位置元素" />
+      <a-form-item field="val" :label="label2">
+        <a-input v-model="form.end" type="number" :placeholder="placeholder2" />
       </a-form-item>
     </a-form>
   </a-modal>
@@ -25,11 +25,26 @@ import { IconPlus, IconDelete, IconMinus } from '@arco-design/web-vue/es/icon';
 const emit = defineEmits<{ (e: 'submit', ele: number): void }>();
 
 interface Props {
-  title: string;
-  text: string;
-  icon: string;
+  type?: string;
+  text?: string;
+  title?: string;
+  icon?: string;
+
+  label1?: string;
+  placeholder1?: string;
+  label2?: string;
+  placeholder2?: string;
 }
-const props = defineProps<Props>()
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '删除元素',
+  type: 'both',
+  label1: '起始位置',
+  label2: '终止位置',
+  placeholder1: '删除元素起始位置',
+  placeholder2: '删除元素结束位置，不填只删除起始位置元素',
+}); 
+
 // const { title, icon } = toRefs(props);
 const visible = ref(false);
 const form = reactive({

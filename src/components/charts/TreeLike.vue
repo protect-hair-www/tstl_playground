@@ -1,0 +1,121 @@
+<!--
+ * @Author: kalai
+ * @LastEditors: kalai
+ * @Description: 
+ * @FilePath: \tstl_playground\src\components\charts\TreeLike.vue
+-->
+<template>
+  <div class="chart-container">
+    <div id="chart" ref="chartRef"></div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { _RBTree } from 'tstl'
+import * as echarts from 'echarts/core';
+import { ref, onMounted, watch } from 'vue'
+import { testAllIterators, traverseCntr } from '@/helper'
+import { ECOption } from './base'
+
+const getData = (cntr: any) => {
+  const dfs = (node: any) => {
+    if (node === cntr.nil) {
+      return { name: 'nil', itemStyle: { color: '#000' }, children: [] };
+    }
+
+    let data: any = {
+      name: `${node.key}`,
+      // name: `${node.key}`,
+      itemStyle: {
+        color: node.color === 0 ? '#f00' : '#000'
+      },
+      children: []
+    };
+    if (node.left) {
+      let ld: any = dfs(node.left);
+      data.children.push(ld);
+    }
+
+    if (node.right) {
+      let rd = dfs(node.right);
+      data.children.push(rd);
+    }
+    return data;
+  }
+  return dfs(cntr.root)
+}
+
+const getOption = (cntr: any): ECOption => {
+  const data = getData(cntr)
+  let option: ECOption = {
+    series: [
+      {
+        type: 'tree',
+        data: [data],
+        left: '2%',
+        right: '2%',
+        top: '8%',
+        bottom: '20%',
+        symbolSize: 32,
+        symbol: 'circle',
+        orient: 'vertical',
+        initialTreeDepth: -1,
+        label: {
+          position: 'inside',
+          verticalAlign: 'middle',
+          align: 'middle',
+          fontSize: 14
+        },
+        lineStyle: {
+          curveness: 0
+        },
+        leaves: {
+          lineStyle: {
+            width: 0
+          },
+          itemStyle: {
+            opacity: 0
+          }
+        },
+        animationDurationUpdate: 750
+      }
+    ]
+  }
+  return option
+}
+
+const chartRef = ref(null)
+let chart = ref(null)
+
+const draw = (cntr) => {
+  const option: ECOption = getOption(props.cntr);
+  chart.setOption(option)
+}
+
+const props = withDefaults(defineProps<{
+  size: number;
+  cntr: any;
+}>(), { size: 0 })
+
+onMounted(() => {
+  const chartDom = chartRef.value;
+  chart = echarts.init(chartDom);
+  draw(props.cntr)
+})
+
+watch(() => props.cntr, (first, second) => {
+  // console.log('watch draw type', props.size)
+  draw(props.cntr)
+}, { deep: true })
+
+watch(() => props.size, (first, second) => {
+  // console.log('watch draw type of associative', props.size)
+  draw(props.cntr)
+  // traverseCntr(props.cntr)
+}, { deep: true })
+
+</script>
+
+<style lang="css" scoped>
+</style>
+

@@ -9,7 +9,7 @@
 
   <a-modal v-model:visible="visible" :title="title" @cancel="handleCancel" @ok="handleSubmit">
     <a-form :model="form">
-      <a-form-item field="pos" label="位置">
+      <a-form-item v-if="type !== 'val'" field="pos" label="位置">
         <a-input v-model="form.pos" type="number" placeholder="插入元素位置" />
       </a-form-item>
       <a-form-item field="val" label="值">
@@ -27,19 +27,27 @@ const emit = defineEmits<{ (e: 'submit', ele: number): void }>();
 interface Props {
   title: string;
   text: string;
-  icon: string;
+  type?: string;
+  icon?: string;
 }
-const props = defineProps<Props>()
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '插入元素',
+  text: 'insert',
+  type: 'both',
+  icon: 'Plus',
+}); 
+
 // const { title, icon } = toRefs(props);
 const visible = ref(false);
 const form = reactive({
   pos: '',
   val: '',
-});
+})
 
 const handleClick = () => {
   visible.value = true;
-};
+}
 
 const handleCancel = () => {
   visible.value = false;

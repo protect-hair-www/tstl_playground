@@ -1,46 +1,59 @@
 <!--
  * @Author: hzheyuan
  * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-05-16 17:39:07
+ * @LastEditTime: 2022-05-19 15:29:06
  * @LastEditors: kalai
  * @Description: 
  * @FilePath: \tstl_playground\src\views\container\Deque.vue
 -->
 <template>
-  <div class="Deque-test">
-    <div class="op">
-      <div>
-        <label for="insert">push_back</label>
-        <input type="number" @keyup.enter="onPushBack" />
-      </div>
+  <Space class="content deque" size="large" direction='vertical'>
 
-      <div>
-        <label for="insert">push_front</label>
-        <input type="number" @keyup.enter="onPushFront" />
-      </div>
+    <Space class="modifiers" size='middle' direction='vertical'>
+      <!-- Capacity -->
+      <Space align="start">
+        <!-- <Divider>loading fixed width</Divider> -->
+        <AccessBtn @click="() => onCapacity('size')" text="size" />
+        <AccessBtn @click="() => onCapacity('empty')" text="empty" />
+      </Space>
 
-      <div>
-        <button @click="onGetFront">front</button>
-        <button @click="onGetBack">back</button>
-      </div>
+      <!-- Element access -->
+      <Space>
+        <!-- <Divider>loading fixed width</Divider> -->
+        <AccessBtn @click="() => onAccess('front')" text="front" />
+        <AccessBtn @click="() => onAccess('back')" text="back" />
+        <AccessBtn @click="onPopBack" text="pop_back" icon="Minus" />
+      </Space>
 
-      <div>
-        <button @click="onPopFront">pop_front</button>
-        <button @click="onPopBack">pop_back</button>
-      </div>
-    </div>
-    <Chart type="Deque" :cntr="deqRefs" />
-  </div>
+      <!-- Modifiers -->
+      <Space>
+        <PushModal @submit="onPushBack" text="push_back" icon="Plus" />
+        <InsertModal @submit="onInsert" title="插入" text="insert" icon="Plus" />
+        <EraseModal @submit="onErase" title="删除" text="erase" icon="Minus" />
+        <AccessBtn @click="onReset" text="reset" icon="Minus" />
+        <AccessBtn @click="onSort" text="sort" icon="Minus" />
+      </Space>
+
+    </Space>
+    <Linear :cntr="deqRefs" />
+  </Space>
 </template>
 
 <script setup lang="ts">
 import Chart from '@/components/chart.vue'
 import { ref, onMounted } from 'vue'
 import { Deque } from 'tstl'
-import { testAllIterators, traverseCntr } from '@/helper'
+import { testAllIterators, traverseCntr, Person } from '@/helper'
 
-const deqCntr: Deque<string> = new Deque<string>()
-const deqRefs = ref<Deque<string>>(deqCntr);
+import Linear from "@/components/charts/ArrayList.vue";
+import AccessBtn from "@/components/AccessBtn.vue";
+import PushModal from "@/components/PushModal.vue";
+import InsertModal from "@/components/InsertModal.vue";
+import EraseModal from "@/components/EraseModal.vue";
+import { Notification, Divider, Space } from '@arco-design/web-vue';
+
+const deqCntr: Deque<number> = new Deque<number>()
+const deqRefs = ref<Deque<number>>(deqCntr);
 let deq = deqRefs.value;
 
 const onPushBack = (e: Event) => {
@@ -71,88 +84,22 @@ const onPopBack = () => {
   deq.pop_back()
 }
 
+const orginArray = [1, 3, 5, 6, 7, 8, 2, 3, 6, 8, 9, 10, 11];
+const initContainer = () => {
+  for (let num of orginArray) {
+    deq.push_back(num);
+  }
+}
+
+const onReset = () => {
+  deq.clear();
+  for (let num of orginArray) {
+    vec.push_back(num);
+  }
+}
+
 const test = () => {
-  deq.push_back('1')
-  deq.push_back('2')
-  deq.push_back('3')
-  deq.push_back('4')
-  deq.push_back('5')
-  console.log(deq)
-
-  // 可视化  
-  // chart.drawList(list)
-
-  // console.log('=====Iterator=====')
-  // traverseCntr(deq, 'iterator')
-  // testAllIterators(deq)
-
-  // console.log('=====Capacity=====')
-  // console.log('empty', deq.empty())
-  // console.log('size', deq.size())
-
-  // console.log('=====Element Access=====')
-  // console.log('front', deq.front())
-  // console.log('back', deq.back())
-
-  // console.log('=====Modifiers=====')
-  // let itr = deq.begin()
-  // itr.next()
-  // deq.insert(itr, '5')
-  // traverseCntr(deq, 'begin next insert 5')
-
-  // deq.insert(deq.end(), '2')
-  // traverseCntr(deq, 'insert at en with 2')
-
-  // itr = deq.begin()
-  // itr.next(); itr.next()
-  // deq.insert(itr, 5, '7')
-  // traverseCntr(deq, 'insert at begin.next with 5 7')
-
-  // itr = deq.begin()
-  // itr.next()
-  // deq.insert(itr, deq.begin(), deq.end())
-  // traverseCntr(deq, 'inset a range of iterator')
-
-  // deq.erase(deq.begin())
-  // traverseCntr(deq, 'erase begin')
-
-  // deq.resize(10, '1')
-  // traverseCntr(deq, 'resize of 10 1')
-  // deq.resize(15, '1')
-  // traverseCntr(deq, 'resize of 15 1')
-
-  // deq.resize(5, '5')
-  // traverseCntr(deq, 'resize 5 5')
-
-  // console.log('=====Operations=====')
-  // deq.assign(6, '5')
-  // traverseCntr(deq, 'assign 6 5')
-
-  // let arr = ['1', '2', '4', '3']
-  // deq.assign(arr)
-  // traverseCntr(deq, 'assign iterable cntr')
-
-  // let deq2 = new Deque<string>();
-  // deq2.push_back('3')
-  // deq2.push_back('5')
-  // deq2.push_back('2')
-  // deq.assign(deq2.begin(), deq2.end())
-  // traverseCntr(deq, 'assign with iterator')
-
-  // deq2.clear()
-  // deq2.push_back('8')
-  // deq2.push_back('9')
-  // deq2.push_back('10')
-  // deq.swap(deq2)
-  // traverseCntr(deq, 'swap two deq')
-  // traverseCntr(deq2, 'swap two deq')
-
-  // deq.clear()
-  // traverseCntr(deq, 'clear')
-
-  // deq.emplace<String>(deq.begin(), String, '3')
-  // deq.emplace_back<String>(String, '5')
-  // traverseCntr(deq, 'emplace')
+  initContainer()
 }
 
 onMounted(test)
