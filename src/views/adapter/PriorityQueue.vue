@@ -1,78 +1,88 @@
 <!--
- * @Author: hzheyuan
- * @Date: 2022-03-12 12:10:21
- * @LastEditTime: 2022-05-16 17:40:01
+ * @Author: kalai
  * @LastEditors: kalai
- * @Description: priority queue
+ * @Description: 
  * @FilePath: \tstl_playground\src\views\adapter\PriorityQueue.vue
 -->
 <template>
-    <div class="priorityqueue-test">
-        <div class="op">
-            <div>
-                <label for="insert">push_heap</label>
-                <input type="number" @keyup.enter="onPush" />
-            </div>
-            <div>
-                <button @click="onPop">pop</button>
-                <button @click="onGetTop">top</button>
-            </div>
-        </div>
-        <Chart type="PriorityQueue" :cntr="pqRefs"/>
-    </div>
+  <Space class="content rbtree" size="large" direction='vertical'>
+    <Space class="modifiers" size='middle' direction='vertical'>
+      <!-- Modifiers -->
+      <Space>
+        <AccessBtn @click="() => onCapacity('size')" text="size" />
+        <AccessBtn @click="() => onCapacity('empty')" text="empty" />
+
+        <AccessBtn @click="() => onAccess('top')" text="top" />
+        <InsertModal @submit="onPush" title="push" type="val" text="push" />
+        <AccessBtn @click="onPop" text="pop" />
+        <AccessBtn @click="onReset" text="reset"/>
+      </Space>
+    </Space>
+    <HeapChart :size="opCnt" :cntr="state.cntr"></HeapChart>
+  </Space>
 </template>
 
 <script setup lang="ts">
-import Chart from '@/components/chart.vue'
-import { ref, onMounted, queuePostFlushCb } from 'vue'
-import { Vector, PriorityQueue, less, greater } from 'tstl'
-import { testAllIterators, traverseCntr } from '@/helper'
+import { ref, onMounted, reactive, watch, computed } from 'vue'
+import { PriorityQueue, Vector, less, advance, distance, reverse } from 'tstl'
+import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon'
+import { Notification, Divider, Space } from '@arco-design/web-vue'
+import { randomNum, testAllIterators, traverseCntr,  Person} from '@/helper'
+import HeapChart from "@/components/charts/HeapLike.vue"
 
-let pqCntr = new PriorityQueue<number>(Vector, less, true);
-let pqRefs = ref<PriorityQueue<number>>(pqCntr);
-let pq = pqRefs.value;
+const opCnt = ref<number>(0)
+const cntr = new PriorityQueue<number>(Vector, less, true);
+const state = reactive({cntr})
 
-const onGetTop = () => {
-    console.log(pq.top())
-}
-
-const onPush = (e: Event) => {
-    const target = (<HTMLInputElement>e.target)
-    const v = Number(target.value)
-    pq.push(v)
-    console.log(pq.top(), 'top')
+const onPush = (form) => {
+  const k = Number(form.val)
+  const n = state.cntr.push(k);
+  opCnt.value++
 }
 
 const onPop = () => {
-    console.log(pq.top(), 'pop')
-    pq.pop()
+  state.cntr.pop();
+  opCnt.value++
 }
 
-const test = () => {
-    pq.push(10)
-    pq.push(20)
-    pq.push(30)
-    pq.push(5)
-    pq.push(15)
-
-    console.log(pq.top(), 'top')
-    pq.push(50)
-    console.log('push 50')
-    console.log(pq.top(), 'top')
-    pq.push(19)
-    console.log('push 19')
-    console.log(pq.top(), 'top')
-    console.log('pop all of pq: ')
-    // while(pq.size() > 0) {
-    //     console.log(pq.top());
-    //     pq.pop()
-    // }
-
-    // draw the chart
-    // chart.drawHeap(pq)
+const getResultOf = (type: string) => {
+  if (type === 'size') return `${state.cntr.size()}`
+  if (type === 'empty') return `${state.cntr.empty()}`
+  if (type === 'top') return `${state.cntr.top()}`
 }
 
-onMounted(test)
+const onCapacity = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Capacity of the container`,
+    content: `The Result is ${res}`
+  })
+}
+
+const onAccess = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Access element of ${type}`,
+    content: `The Result is ${res}`
+  })
+}
+
+const onReset = () => {
+    // console.log(state.cntr)
+  state.cntr.cntr.clear();
+  for (let num of orginArray) {
+    state.cntr.push(num)
+  }
+}
+
+const orginArray = [1, 3, 5, 6, 7, 8, 2, 3, 6, 8, 9, 10, 11];
+const initContainer = () => {
+  for (let num of orginArray) {
+    state.cntr.push(num)
+  }
+}
+
+onMounted(initContainer)
 
 </script>
 <style lang="css" scoped>

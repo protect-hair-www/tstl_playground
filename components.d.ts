@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     Chart: typeof import('./src/components/chart.vue')['default']
     Editor: typeof import('./src/components/editor.vue')['default']
     EraseModal: typeof import('./src/components/EraseModal.vue')['default']
+    HeapLike: typeof import('./src/components/charts/HeapLike.vue')['default']
     InsertModal: typeof import('./src/components/InsertModal.vue')['default']
     'InsertModal copy': typeof import('./src/components/InsertModal copy.vue')['default']
     Linear: typeof import('./src/components/charts/Linear.vue')['default']

@@ -1,85 +1,91 @@
 <!--
- * @Author: hzheyuan
- * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-05-16 17:36:55
+ * @Author: kalai
  * @LastEditors: kalai
  * @Description: 
  * @FilePath: \tstl_playground\src\views\adapter\Queue.vue
 -->
 <template>
-  <div class="queue-test">
-    <div class="op">
-      <div>
-        <label for="insert">push</label>
-        <input type="number" @keyup.enter="onPush" />
-      </div>
-      <div>
-        <button @click="onGetFront">front</button>
-        <button @click="onGetBack">back</button>
-        <button @click="onPop">pop</button>
-      </div>
-    </div>
-    <Chart type="Queue" :cntr="qRefs"/>
-  </div>
+  <Space class="content rbtree" size="large" direction='vertical'>
+    <Space class="modifiers" size='middle' direction='vertical'>
+
+      <!-- Modifiers -->
+      <Space>
+        <AccessBtn @click="() => onCapacity('size')" text="size" />
+        <AccessBtn @click="() => onCapacity('empty')" text="empty" />
+
+        <AccessBtn @click="() => onAccess('top')" text="top" />
+        <InsertModal @submit="onPush" title="push" type="val" text="push" />
+        <AccessBtn @click="onPop" text="pop" />
+        <AccessBtn @click="onReset" text="reset"/>
+      </Space>
+    </Space>
+    <HeapChart :size="opCnt" :cntr="state.cntr"></HeapChart>
+  </Space>
 </template>
 
 <script setup lang="ts">
-import Chart from '@/components/chart.vue'
-import { ref, onMounted } from 'vue'
-import { testAllIterators, traverseCntr } from '@/helper'
-import { Queue } from 'tstl'
+import { ref, onMounted, reactive, watch, computed } from 'vue'
+import { PriorityQueue, Queue, less, advance, distance, reverse } from 'tstl'
+import { IconPlus, IconDelete } from '@arco-design/web-vue/es/icon'
+import { Notification, Divider, Space } from '@arco-design/web-vue'
+import { randomNum, testAllIterators, traverseCntr,  Person} from '@/helper'
+import HeapChart from "@/components/charts/HeapLike.vue"
 
-let qCntr: Queue<string> = new Queue<string>()
-let qRefs = ref<Queue<string>>(qCntr);
-let q = qRefs.value;
+const opCnt = ref<number>(0)
+const cntr = new Queue<number>();
+const state = reactive({cntr})
 
-const onPush = (e: Event) => {
-  const target = (<HTMLInputElement>e.target)
-  const v = target.value
-  q.push(v)
+const onPush = (form) => {
+  const k = Number(form.val)
+  const n = state.cntr.push(k);
+  opCnt.value++
 }
 
 const onPop = () => {
-  q.pop()
+  state.cntr.pop();
+  opCnt.value++
 }
 
-const onGetFront = () => {
-  console.log(q.front())
+const getResultOf = (type: string) => {
+  if (type === 'size') return `${state.cntr.size()}`
+  if (type === 'empty') return `${state.cntr.empty()}`
+  if (type === 'top') return `${state.cntr.top()}`
 }
 
-const onGetBack = () => {
-  console.log(q.back())
+const onCapacity = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Capacity of the container`,
+    content: `The Result is ${res}`
+  })
 }
 
-const test = () => {
-  q.push('1')
-  q.push('2')
-  q.push('3')
-  q.push('4')
-  q.push('5')
-  console.log(q)
-
-  // 可视化  
-  // chart.drawList(list)
-
-  console.log('=====Iterator=====')
-  // traverseCntr(q, 'iterator')
-
-  console.log('=====Capacity=====')
-  console.log('empty', q.empty())
-  console.log('size', q.size())
-
-  console.log('=====Element Access=====')
-  console.log('front', q.front())
-  console.log('back', q.back())
-
-  console.log('=====Modifiers=====')
+const onAccess = (type: string) => {
+  const res = getResultOf(type);
+  Notification.info({
+    title: `Access element of ${type}`,
+    content: `The Result is ${res}`
+  })
 }
 
-onMounted(test)
+const onReset = () => {
+    // console.log(state.cntr)
+  state.cntr.cntr.clear();
+  for (let num of orginArray) {
+    state.cntr.push(num)
+  }
+}
+
+const orginArray = [1, 3, 5, 6, 7, 8, 2, 3, 6, 8, 9, 10, 11];
+const initContainer = () => {
+  for (let num of orginArray) {
+    state.cntr.push(num)
+  }
+}
+
+onMounted(initContainer)
 
 </script>
 <style lang="css" scoped>
 </style>
-
 

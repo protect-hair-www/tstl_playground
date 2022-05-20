@@ -40,7 +40,7 @@ const state = reactive({cntr})
 
 const onInsert = (form) => {
   const k = Number(form.val)
-  const n = state.cntr.insert(k, k);
+  const n = state.cntr.insert(k, k)
   opCnt.value++
 }
 
