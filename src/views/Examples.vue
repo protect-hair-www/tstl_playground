@@ -1,28 +1,5 @@
-<!--
- * @Author: hzheyuan
- * @Date: 2022-03-04 17:01:41
- * @LastEditTime: 2022-05-16 13:08:49
- * @LastEditors: kalai
- * @Description: 
- * @FilePath: \tstl_playground\src\views\Examples.vue
--->
 <template>
   <div class="Vector-test">
-    <div class="op">
-      <div>
-        <label for="insert">push_back</label>
-        <input type="number" @keyup.enter="onPushBack" />
-      </div>
-
-      <div>
-        <button @click="onGetFront">front</button>
-        <button @click="onGetBack">back</button>
-      </div>
-
-      <div>
-        <button @click="onPopBack">pop_back</button>
-      </div>
-    </div>
     <Editor />
     <Chart type="Vector" :cntr="vecRefs"/>
   </div>
