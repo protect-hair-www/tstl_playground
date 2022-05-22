@@ -1,6 +1,11 @@
+<!--
+ * @Author: kalai
+ * @LastEditors: kalai
+ * @Description: 
+ * @FilePath: /tstl_playground/src/views/Index.vue
+-->
 <template>
-    <h1>TSTL</h1>
-    <h2>Typscript STL</h2>
+    <h2>Typscript STD</h2>
 </template>
 
 <script setup lang="ts">

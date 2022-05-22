@@ -1,6 +1,11 @@
+<!--
+ * @Author: kalai
+ * @LastEditors: kalai
+ * @Description: 
+ * @FilePath: /tstl_playground/src/views/Home.vue
+-->
 <template>
   <div class="home">
-    home
   </div>
 </template>
 <style scoped>
