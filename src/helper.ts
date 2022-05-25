@@ -1,12 +1,3 @@
-/*
- * @Author: hzheyuan
- * @Date: 2022-02-20 15:06:15
- * @LastEditTime: 2022-03-17 18:26:43
- * @LastEditors: hzheyuan
- * @Description: some helper functions
- * @FilePath: \tstl_playground\src\views\util.ts
- */
-
 /**
  * @description: A test class
  * @param {*}
